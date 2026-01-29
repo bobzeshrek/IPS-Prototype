@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>People & Culture (HR)</title>
+    <link rel="stylesheet" href="styles/departmentsTeam.css" />
+    </head>
+
+    <body>
+    <header class="topbar">
+        <button class="back-btn" type="button" onclick="history.back()">← Back</button>
+        <h1 class="topbar__title">People & Culture (HR)</h1>
+        <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <main class="office" id="office" aria-label="HR office scene"></main>
+
+
+    <div class="tour is-hidden" id="tour" aria-hidden="true">
+        <div class="tour__dim tour__dim--top" id="dimTop" aria-hidden="true"></div>
+        <div class="tour__dim tour__dim--left" id="dimLeft" aria-hidden="true"></div>
+        <div class="tour__dim tour__dim--right" id="dimRight" aria-hidden="true"></div>
+        <div class="tour__dim tour__dim--bottom" id="dimBottom" aria-hidden="true"></div>
+
+        <div class="tour__spotlightBorder" id="tourSpotlight" aria-hidden="true"></div>
+
+        <div class="tour__card" role="dialog" aria-label="HR department tutorial" aria-modal="true">
+        <div class="tour__title" id="tourTitle">Welcome!</div>
+        <div class="tour__text" id="tourText">
+            Hover or tap a team member to view their profile. Use Next to explore everyone.
+        </div>
+
+        <div class="tour__actions">
+            <button class="tour__btn tour__btn--ghost" id="tourSkip" type="button">Skip</button>
+            <div class="tour__spacer"></div>
+            <button class="tour__btn tour__btn--ghost" id="tourBack" type="button">Back</button>
+            <button class="tour__btn tour__btn--primary" id="tourNext" type="button">Next</button>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        const OFFICE_BG = "assets/office.jpg";
+        const BODY_IMG  = "assets/body.png";
+
+        // Detect touch/mobile
+        const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+        function escapeHtml(str=""){
+        return String(str)
+            .replaceAll("&","&amp;")
+            .replaceAll("<","&lt;")
+            .replaceAll(">","&gt;")
+            .replaceAll('"',"&quot;")
+            .replaceAll("'","&#039;");
+        }
+
+        // ====== HR TEAM (UPDATED) ======
+        const TEAM = [
+        {
+            name: "Zara Malik",
+            role: "HR & People Experience Manager",
+            contact: "zara.malik@scape.sg",
+            phone: "+65 6123 4031",
+            intro:
+            "I look after the people side of *SCAPE—from hiring and onboarding to making sure our culture feels safe, inclusive, and human. I focus on employee experience and systems that support growth without feeling rigid.",
+            photo: "assets/pfp-zara.jpg",
+            teamsUrl: "https://teams.microsoft.com/l/chat/0/0?users=zara.malik@scape.sg",
+            x: 28, y: 54
+        },
+        {
+            name: "Amir Hassan",
+            role: "Talent Acquisition & HR Operations Executive",
+            contact: "amir.hassan@scape.sg",
+            phone: "+65 6123 4032",
+            intro:
+            "I handle recruitment and HR operations at *SCAPE—from interviews and contracts to behind-the-scenes admin—so teams can focus on their work while everything stays smooth and organised.",
+            photo: "assets/pfp-amir.jpg",
+            teamsUrl: "https://teams.microsoft.com/l/chat/0/0?users=amir.hassan@scape.sg",
+            x: 52, y: 62
+        },
+        {
+            name: "Jordan Lee",
+            role: "Employee Engagement & Culture Executive",
+            contact: "jordan.lee@scape.sg",
+            phone: "+65 6123 4033",
+            intro:
+            "I focus on employee engagement and workplace culture—planning initiatives and internal events that help people feel connected, supported, and seen.",
+            photo: "assets/pfp-jordan.jpg",
+            teamsUrl: "https://teams.microsoft.com/l/chat/0/0?users=jordan.lee@scape.sg",
+            x: 78, y: 54
+        }
+        ];
+
+        // ====== DOM ======
+        const office = document.getElementById("office");
+        office.style.backgroundImage = `url('${OFFICE_BG}')`;
+
+        function closeAllTips(){
+        document.querySelectorAll(".buddy.is-tip-open").forEach(b => {
+            b.classList.remove("is-tip-open");
+            b.querySelector(".buddy-tip")?.setAttribute("aria-hidden","true");
+        });
+        }
+
+        function openTeams(url){
+        window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        function renderBuddies() {
+        office.innerHTML = "";
+
+        TEAM.forEach((p, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "buddy";
+            btn.style.left = p.x + "%";
+            btn.style.top = p.y + "%";
+            btn.dataset.index = String(idx);
+
+            btn.setAttribute(
+            "aria-label",
+            `Team member: ${p.name}. ${isTouch ? "Tap to view details." : "Hover to view details."}`
+            );
+
+            btn.innerHTML = `
+            <!-- tooltip first -->
+            <div class="buddy-tip" role="tooltip" aria-hidden="true">
+                <div class="buddy-tip__name">${escapeHtml(p.name)}</div>
+                <div class="buddy-tip__row"><span class="k">Role:</span> ${escapeHtml(p.role)}</div>
+                <div class="buddy-tip__row"><span class="k">Email:</span> ${escapeHtml(p.contact)}</div>
+                <div class="buddy-tip__row"><span class="k">Phone:</span> ${escapeHtml(p.phone || "")}</div>
+                <div class="buddy-tip__intro">${escapeHtml(p.intro)}</div>
+
+                <button class="buddy-tip__teamsBtn" type="button"
+                data-teams="${escapeHtml(p.teamsUrl)}"
+                aria-label="Connect with ${escapeHtml(p.name)} on Microsoft Teams">
+                <span class="teams-icon" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" focusable="false" aria-hidden="true">
+                    <path d="M8 20c0-4.4 3.6-8 8-8h20c4.4 0 8 3.6 8 8v24c0 4.4-3.6 8-8 8H16c-4.4 0-8-3.6-8-8V20z" fill="currentColor" opacity=".22"/>
+                    <path d="M18 22h20v6h-7v20h-6V28h-7v-6z" fill="currentColor"/>
+                    <path d="M46 26c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-2.7-6-6z" fill="currentColor" opacity=".55"/>
+                    <path d="M44 36c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v8c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4v-8z" fill="currentColor" opacity=".4"/>
+                    </svg>
+                </span>
+                <span class="buddy-tip__teamsText">Connect on Teams</span>
+                </button>
+            </div>
+
+            <div class="buddy__head">
+                <img class="buddy__pfp" src="${p.photo}" alt="${escapeHtml(p.name)}" />
+            </div>
+
+            <img class="buddy__body" src="${BODY_IMG}" alt="" aria-hidden="true" />
+            `;
+
+            // Mobile: tap toggles tooltip open/close. Desktop: click does nothing.
+            btn.addEventListener("click", (e) => {
+            if (e.target.closest(".buddy-tip__teamsBtn")) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!isTouch) return;
+
+            const isOpen = btn.classList.contains("is-tip-open");
+            closeAllTips();
+
+            if (!isOpen){
+                btn.classList.add("is-tip-open");
+                btn.querySelector(".buddy-tip")?.setAttribute("aria-hidden","false");
+            }
+            });
+
+            // Teams button opens Teams (desktop + mobile)
+            btn.addEventListener("click", (e) => {
+            const teamsBtn = e.target.closest(".buddy-tip__teamsBtn");
+            if (!teamsBtn) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const url = teamsBtn.getAttribute("data-teams");
+            if (url) openTeams(url);
+            });
+
+            office.appendChild(btn);
+        });
+        }
+
+        // Mobile: tap outside closes tooltip
+        document.addEventListener("click", (e) => {
+        if (!isTouch) return;
+        const buddy = e.target.closest?.(".buddy");
+        if (!buddy) closeAllTips();
+        });
+
+        // =========================
+        // TOUR
+        // =========================
+        const TOUR_KEY = "hr_tour_done_v1";
+
+        const tourEl     = document.getElementById("tour");
+        const tourTitle  = document.getElementById("tourTitle");
+        const tourText   = document.getElementById("tourText");
+        const tourNext   = document.getElementById("tourNext");
+        const tourBack   = document.getElementById("tourBack");
+        const tourSkip   = document.getElementById("tourSkip");
+
+        const dimTop     = document.getElementById("dimTop");
+        const dimLeft    = document.getElementById("dimLeft");
+        const dimRight   = document.getElementById("dimRight");
+        const dimBottom  = document.getElementById("dimBottom");
+        const spotBorder = document.getElementById("tourSpotlight");
+
+        let TOUR_STEPS = [];
+        let tourIndex = 0;
+
+        function buildTourSteps(){
+        const steps = [
+            {
+            title: "Welcome!",
+            text:
+                "This is People & Culture (HR).\n" +
+                "Use Next to meet everyone.\n\n" +
+                "Tip: Hover (desktop) or tap (mobile) to view the profile card and connect on Teams.",
+            target: null
+            }
+        ];
+
+        TEAM.forEach((p, i) => {
+            steps.push({
+            title: p.name,
+            text: `${p.role}\n${p.contact}\n${p.phone}\n\n${p.intro}`,
+            target: `.buddy[data-index="${i}"]`
+            });
+        });
+
+        steps.push({
+            title: "You're all set",
+            text:
+            "That’s the HR team.\n" +
+            "You can hover/tap anyone anytime to view their details and connect on Teams.",
+            target: null,
+            done: true
+        });
+
+        return steps;
+        }
+
+        function showTour(){
+        document.body.classList.add("tour-active");
+        tourEl.classList.remove("is-hidden");
+        tourEl.setAttribute("aria-hidden","false");
+        tourIndex = 0;
+        renderTourStep();
+        }
+
+        function hideTour(){
+        document.body.classList.remove("tour-active");
+        tourEl.classList.add("is-hidden");
+        tourEl.setAttribute("aria-hidden","true");
+        clearSpotlight();
+        }
+
+        function clearSpotlight(){
+        spotBorder.style.left = "-9999px";
+        spotBorder.style.top = "-9999px";
+        spotBorder.style.width = "0px";
+        spotBorder.style.height = "0px";
+
+        [dimTop, dimLeft, dimRight, dimBottom].forEach(d => {
+            d.style.left = "-9999px";
+            d.style.top = "-9999px";
+            d.style.width = "0px";
+            d.style.height = "0px";
+        });
+
+        document.querySelectorAll(".buddy.is-highlighted").forEach(el => el.classList.remove("is-highlighted"));
+        }
+
+        function setSpotlightTo(selector){
+        document.querySelectorAll(".buddy.is-highlighted").forEach(el => el.classList.remove("is-highlighted"));
+
+        if (!selector){
+            clearSpotlight();
+            return;
+        }
+
+        const el = document.querySelector(selector);
+        if (!el){
+            clearSpotlight();
+            return;
+        }
+
+        el.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
+
+        const r = el.getBoundingClientRect();
+        const pad = 12;
+
+        const left = Math.max(8, r.left - pad);
+        const top = Math.max(8, r.top - pad);
+        const width = Math.min(window.innerWidth - left - 8, r.width + pad * 2);
+        const height = Math.min(window.innerHeight - top - 8, r.height + pad * 2);
+
+        const right = left + width;
+        const bottom = top + height;
+
+        spotBorder.style.left = left + "px";
+        spotBorder.style.top = top + "px";
+        spotBorder.style.width = width + "px";
+        spotBorder.style.height = height + "px";
+
+        dimTop.style.left = "0px";
+        dimTop.style.top = "0px";
+        dimTop.style.width = "100vw";
+        dimTop.style.height = top + "px";
+
+        dimLeft.style.left = "0px";
+        dimLeft.style.top = top + "px";
+        dimLeft.style.width = left + "px";
+        dimLeft.style.height = height + "px";
+
+        dimRight.style.left = right + "px";
+        dimRight.style.top = top + "px";
+        dimRight.style.width = (window.innerWidth - right) + "px";
+        dimRight.style.height = height + "px";
+
+        dimBottom.style.left = "0px";
+        dimBottom.style.top = bottom + "px";
+        dimBottom.style.width = "100vw";
+        dimBottom.style.height = (window.innerHeight - bottom) + "px";
+
+        el.classList.add("is-highlighted");
+
+        if (isTouch){
+            closeAllTips();
+            el.classList.add("is-tip-open");
+            el.querySelector(".buddy-tip")?.setAttribute("aria-hidden","false");
+        }
+        }
+
+        function renderTourStep(){
+        const step = TOUR_STEPS[tourIndex];
+
+        tourTitle.textContent = step.title;
+        tourText.textContent = step.text;
+
+        tourBack.disabled = tourIndex === 0;
+        const last = tourIndex === TOUR_STEPS.length - 1;
+        tourNext.textContent = last ? "Finish" : "Next";
+
+        setSpotlightTo(step.target);
+
+        if (step.done){
+            localStorage.setItem(TOUR_KEY, "1");
+        }
+        }
+
+        tourNext.addEventListener("click", () => {
+        const last = tourIndex === TOUR_STEPS.length - 1;
+        if (!last){
+            tourIndex += 1;
+            renderTourStep();
+            return;
+        }
+        localStorage.setItem(TOUR_KEY, "1");
+        hideTour();
+        });
+
+        tourBack.addEventListener("click", () => {
+        if (tourIndex === 0) return;
+        tourIndex -= 1;
+        renderTourStep();
+        });
+
+        tourSkip.addEventListener("click", () => {
+        localStorage.setItem(TOUR_KEY, "1");
+        hideTour();
+        });
+
+        document.addEventListener("keydown", (e) => {
+        if (tourEl.classList.contains("is-hidden")) return;
+
+        if (e.key === "Escape"){
+            localStorage.setItem(TOUR_KEY, "1");
+            hideTour();
+        }
+        if (e.key === "Enter"){
+            tourNext.click();
+        }
+        });
+
+        window.addEventListener("resize", () => {
+        closeAllTips();
+        if (!tourEl.classList.contains("is-hidden")) {
+            setSpotlightTo(TOUR_STEPS[tourIndex]?.target);
+        }
+        });
+
+        // ====== RUN ======
+        renderBuddies();
+        TOUR_STEPS = buildTourSteps();
+
+        if (!localStorage.getItem(TOUR_KEY)){
+        showTour();
+        }
+    </script>
+</body>
+</html>

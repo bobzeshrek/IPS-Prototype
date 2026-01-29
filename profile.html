@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!-- mobile responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile</title>
+    <link rel="stylesheet" href="styles/profile.css" />
+    </head>
+
+    <body>
+
+    <!-- header -->
+    <header class="topbar">
+        <button class="back-btn" type="button" onclick="history.back()" aria-label="Go back">
+        ← Back
+        </button>
+        <h1 class="topbar__title">My Profile</h1>
+        <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <!-- content -->
+    <main class="page">
+        <section class="profile-card">
+
+        <div class="profile-left">
+            <label class="avatar-block avatar-block--clickable" for="photoInput" aria-label="Upload profile photo">
+            <input id="photoInput" class="photo-input" type="file" accept="image/*" />
+            <img class="avatar-img" id="avatarImg" src="assets/account_img.jpg" alt="Profile photo" />
+            <div class="avatar-placeholder" id="avatarPlaceholder">
+                <span>Take<br/>photo</span>
+            </div>
+            </label>
+
+            <!-- body image -->
+            <div class="body-block" aria-label="Body placeholder"></div>
+
+            <!-- Edit short intro -->
+            <button class="edit-btn" type="button" id="openEditIntro">
+            Edit Short Intro
+            </button>
+
+            <!-- Request HR change -->
+            <button class="edit-btn edit-btn--ghost" type="button" id="openHrRequest">
+            Request HR Change
+            </button>
+        </div>
+
+        <!-- right -->
+        <div class="profile-right">
+            <!-- Non-editable fields (tooltip shows HR only) -->
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">User:</div>
+            <div class="value" id="userId"> SCAPE_User_67</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Name:</div>
+            <div class="value" id="name"> Jaden Koh</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Department:</div>
+            <div class="value" id="dept">Marketing</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Role:</div>
+            <div class="value" id="role">Intern</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Contact:</div>
+            <div class="value" id="contact">jaden.koh@scape.sg | +65 6123 4002</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <!-- Editable: Short intro (shows current value only, edit via modal) -->
+            <div class="field field--multiline">
+            <div class="label">Short intro:</div>
+            <div class="value" id="intro">
+            </div>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">supervisor:</div>
+            <div class="value" id="contact">Anna Tan</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Team:</div>
+            <div class="value" id="contact">scape social media marketing team</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+
+            <div class="field field--locked" data-tip="Only HR can edit this field">
+            <div class="label">Desk number:</div>
+            <div class="value" id="contact"> level 2 desk 76</div>
+            <span class="lock-pill" aria-hidden="true">HR only</span>
+            </div>
+        </div>
+
+        </section>
+    </main>
+
+    <!-- MODAL 1: Edit short intro (USER EDITABLE) -->
+    <div class="modal is-hidden" id="introModal" role="dialog" aria-label="Edit Short Intro" aria-hidden="true">
+        <div class="modal__overlay" id="introOverlay"></div>
+
+        <div class="modal__panel" role="document">
+        <div class="modal__header">
+            <h2 class="modal__title">Edit Short Intro</h2>
+            <button class="icon-btn" id="closeIntro" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <form class="modal__body" id="introForm">
+            <div class="form-row">
+            <label for="editIntro">Short intro</label>
+            <textarea
+                id="editIntro"
+                rows="5"
+                placeholder="E.g. Your hobbies, favourite music, what you’re excited to learn at *SCAPE…"
+            ></textarea>
+            <p class="small-help">This is the only field you can edit yourself.</p>
+            </div>
+
+            <div class="modal__actions">
+            <button class="btn btn--ghost" type="button" id="cancelIntro">Cancel</button>
+            <button class="btn btn--primary" type="submit">Save</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: HR change request (REQUEST FORM) -->
+    <div class="modal is-hidden" id="hrModal" role="dialog" aria-label="Request HR Change" aria-hidden="true">
+        <div class="modal__overlay" id="hrOverlay"></div>
+
+        <div class="modal__panel" role="document">
+        <div class="modal__header">
+            <h2 class="modal__title">Request HR Change</h2>
+            <button class="icon-btn" id="closeHr" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <form class="modal__body" id="hrForm">
+            <div class="form-row">
+            <label for="reqField">Which field needs updating?</label>
+            <select id="reqField">
+                <option value="Name">Name</option>
+                <option value="dept">Department</option>
+                <option value="Role">Role</option>
+                <option value="Contact">Contact</option>
+                <option value="User ID">User ID</option>
+            </select>
+            </div>
+
+            <div class="form-row">
+            <label for="reqValue">Correct value</label>
+            <input id="reqValue" type="text" placeholder="Type the correct value..." />
+            </div>
+
+            <div class="form-row">
+            <label for="reqReason">Reason</label>
+            <textarea id="reqReason" rows="4" placeholder="Tell HR why this needs to be changed..."></textarea>
+            <p class="small-help">This form submits a request (mock). HR will review and update.</p>
+            </div>
+
+            <div class="modal__actions">
+            <button class="btn btn--ghost" type="button" id="cancelHr">Cancel</button>
+            <button class="btn btn--primary" type="submit">Submit Request</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- SUBMITTED POPUP (shared) -->
+    <div class="modal is-hidden" id="submittedModal" role="dialog" aria-label="Request Submitted" aria-hidden="true">
+        <div class="modal__overlay" id="submittedOverlay"></div>
+
+        <div class="modal__panel modal__panel--small" role="document">
+        <div class="modal__header">
+            <h2 class="modal__title" id="submittedTitle">Saved</h2>
+            <button class="icon-btn" id="closeSubmitted" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <div class="modal__body">
+            <p class="submitted-text" id="submittedText">Done.</p>
+
+            <div class="modal__actions">
+            <button class="btn btn--primary" id="okSubmitted" type="button">OK</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+    // =========================================================
+    // STORAGE KEYS (keep consistent across Profile + HR Dashboard)
+    // =========================================================
+    const PROFILE_DATA_KEY = "profile_data_v1";   // HR-approved profile fields (except photo)
+    const INTRO_KEY        = "profile_intro_v1";  // user editable intro
+    const PHOTO_KEY        = "profile_photo_v1";  // photo dataURL
+    const HR_TICKETS_KEY   = "hr_tickets_v1";     // HR request tickets
+
+    // =========================================================
+    // HELPERS
+    // =========================================================
+    function show(el){ el.classList.remove("is-hidden"); el.setAttribute("aria-hidden","false"); }
+    function hide(el){ el.classList.add("is-hidden"); el.setAttribute("aria-hidden","true"); }
+
+    function loadJSON(key, fallback){
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        try { return JSON.parse(raw); } catch { return fallback; }
+    }
+    function saveJSON(key, val){
+        localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    // =========================================================
+    // SUBMITTED MODAL (shared)
+    // =========================================================
+    const submittedModal   = document.getElementById("submittedModal");
+    const submittedOverlay = document.getElementById("submittedOverlay");
+    const closeSubmitted   = document.getElementById("closeSubmitted");
+    const okSubmitted      = document.getElementById("okSubmitted");
+    const submittedTitle   = document.getElementById("submittedTitle");
+    const submittedText    = document.getElementById("submittedText");
+
+    function openSubmitted(title, text){
+        submittedTitle.textContent = title;
+        submittedText.textContent = text;
+        show(submittedModal);
+    }
+    function closeSubmittedModal(){ hide(submittedModal); }
+
+    submittedOverlay.addEventListener("click", closeSubmittedModal);
+    closeSubmitted.addEventListener("click", closeSubmittedModal);
+    okSubmitted.addEventListener("click", closeSubmittedModal);
+
+    // =========================================================
+    // PROFILE: LOAD / APPLY (HR-approved fields)
+    // =========================================================
+    const userIdEl  = document.getElementById("userId");
+    const nameEl    = document.getElementById("name");
+    const deptEl    = document.getElementById("dept");
+    const roleEl    = document.getElementById("role");
+    const contactEl = document.getElementById("contact");
+    const introEl   = document.getElementById("intro");
+
+    function ensureProfileDataExists(){
+        // If none exists, seed it from the current DOM values
+        const existing = loadJSON(PROFILE_DATA_KEY, null);
+        if (existing) return existing;
+
+        const seeded = {
+        userId:  userIdEl?.textContent?.trim()  || "User_67",
+        name:    nameEl?.textContent?.trim()    || "Jaun Sena Ming Ju",
+        dept:    deptEl?.textContent?.trim()    || "Marketing",
+        role:    roleEl?.textContent?.trim()    || "Marketing Intern",
+        contact: contactEl?.textContent?.trim() || "Jaun_sena@scape.sg",
+        intro:   introEl?.textContent?.trim()   || ""
+        };
+        saveJSON(PROFILE_DATA_KEY, seeded);
+        return seeded;
+    }
+
+    function applyProfileFromStorage(){
+        const p = ensureProfileDataExists();
+        if (p.userId)  userIdEl.textContent  = p.userId;
+        if (p.name)    nameEl.textContent    = p.name;
+        if (p.dept)    deptEl.textContent    = p.dept;
+        if (p.role)    roleEl.textContent    = p.role;
+        if (p.contact) contactEl.textContent = p.contact;
+        // intro handled below (user intro overrides HR intro)
+    }
+
+    applyProfileFromStorage();
+
+
+    const savedIntro = localStorage.getItem(INTRO_KEY);
+    if (savedIntro) {
+        introEl.textContent = savedIntro;
+    } else {
+        const p = loadJSON(PROFILE_DATA_KEY, {});
+        if (p.intro) introEl.textContent = p.intro;
+    }
+
+    const photoInput        = document.getElementById("photoInput");
+    const avatarImg         = document.getElementById("avatarImg");
+    const avatarPlaceholder = document.getElementById("avatarPlaceholder");
+
+    const savedPhoto = localStorage.getItem(PHOTO_KEY);
+    if (savedPhoto) {
+        avatarImg.src = savedPhoto;
+        avatarImg.classList.remove("is-hidden");
+        avatarPlaceholder.classList.add("is-hidden");
+    }
+
+    photoInput.addEventListener("change", () => {
+        const file = photoInput.files && photoInput.files[0];
+        if (!file) return;
+
+
+
+        const reader = new FileReader();
+        reader.onload = () => {
+        const dataUrl = String(reader.result || "");
+        avatarImg.src = dataUrl;
+        avatarImg.classList.remove("is-hidden");
+        avatarPlaceholder.classList.add("is-hidden");
+        localStorage.setItem(PHOTO_KEY, dataUrl);
+
+        openSubmitted("Photo updated", "Your profile photo was updated (saved locally).");
+        };
+        reader.readAsDataURL(file);
+    });
+
+
+    const introModal    = document.getElementById("introModal");
+    const openEditIntro = document.getElementById("openEditIntro");
+    const closeIntro    = document.getElementById("closeIntro");
+    const cancelIntro   = document.getElementById("cancelIntro");
+    const introOverlay  = document.getElementById("introOverlay");
+    const introForm     = document.getElementById("introForm");
+    const editIntro     = document.getElementById("editIntro");
+
+    openEditIntro.addEventListener("click", () => {
+        editIntro.value = introEl.textContent.trim();
+        show(introModal);
+        setTimeout(() => editIntro.focus(), 50);
+    });
+
+    function closeIntroModal(){ hide(introModal); }
+    closeIntro.addEventListener("click", closeIntroModal);
+    cancelIntro.addEventListener("click", closeIntroModal);
+    introOverlay.addEventListener("click", closeIntroModal);
+
+    introForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const val = editIntro.value.trim();
+        if (!val) { editIntro.focus(); return; }
+
+        introEl.textContent = val;
+        localStorage.setItem(INTRO_KEY, val);
+
+        // Optional: also mirror into profile_data_v1 intro
+        const p = loadJSON(PROFILE_DATA_KEY, {});
+        p.intro = val;
+        saveJSON(PROFILE_DATA_KEY, p);
+
+        closeIntroModal();
+        openSubmitted("Saved", "Your short intro has been updated.");
+    });
+
+
+    const hrModal       = document.getElementById("hrModal");
+    const openHrRequest = document.getElementById("openHrRequest");
+    const closeHr       = document.getElementById("closeHr");
+    const cancelHr      = document.getElementById("cancelHr");
+    const hrOverlay     = document.getElementById("hrOverlay");
+    const hrForm        = document.getElementById("hrForm");
+
+    openHrRequest.addEventListener("click", () => show(hrModal));
+
+    function closeHrModal(){ hide(hrModal); }
+    closeHr.addEventListener("click", closeHrModal);
+    cancelHr.addEventListener("click", closeHrModal);
+    hrOverlay.addEventListener("click", closeHrModal);
+
+    function loadTickets(){
+        return loadJSON(HR_TICKETS_KEY, []);
+    }
+    function saveTickets(tickets){
+        saveJSON(HR_TICKETS_KEY, tickets);
+    }
+
+    hrForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const field  = document.getElementById("reqField").value;
+        const value  = document.getElementById("reqValue").value.trim();
+        const reason = document.getElementById("reqReason").value.trim();
+
+        if (!value) {
+        document.getElementById("reqValue").focus();
+        return;
+        }
+
+        // Always read latest profile data (seed if missing)
+        const profile = ensureProfileDataExists();
+
+        const ticket = {
+        id: "T" + Date.now(),
+        status: "PENDING",       
+        createdAt: Date.now(),
+        requestedBy: {
+            userId:  profile.userId,
+            name:    profile.name,
+            dept:    profile.dept,
+            role:    profile.role,
+            contact: profile.contact
+        },
+        change: {
+            field,       
+            newValue: value,
+            reason
+        }
+        };
+
+        const tickets = loadTickets();
+        tickets.unshift(ticket);
+        saveTickets(tickets);
+
+        closeHrModal();
+        hrForm.reset();
+        openSubmitted("Request submitted", "Thanks! Your request has been sent to HR for approval.");
+    });
+
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        hide(introModal);
+        hide(hrModal);
+        hide(submittedModal);
+    });
+    </script>
+
+
+</body>
+</html>

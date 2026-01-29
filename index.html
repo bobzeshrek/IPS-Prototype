@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>*SCAPE Onboarding</title>
+    <link rel="stylesheet" href="styles/landing.css" />
+    </head>
+
+    <body>
+    <header class="topbar">
+        <h1 class="topbar__title">*SCAPE Onboarding</h1>
+        <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <main class="page">
+        <section class="hero" aria-label="Login">
+        <h2 class="hero__title">Welcome</h2>
+        <p class="hero__text">Sign in to continue.</p>
+
+        <!-- LOGIN CARD -->
+        <div class="login">
+            <div class="login__row">
+            <label class="label" for="email">Email</label>
+            <input class="input" id="email" type="email" placeholder="Enter Email" autocomplete="username" />
+            </div>
+
+            <div class="login__row">
+            <label class="label" for="password">Password</label>
+            <input class="input" id="password" type="password" placeholder="Enter password" autocomplete="current-password" />
+            </div>
+
+            <div class="login__actions">
+            <button class="btn" id="signInBtn" type="button">Sign in</button>
+            </div>
+
+            <p class="error" id="errorMsg" role="alert" aria-live="polite"></p>
+
+        </div>
+        </section>
+    </main>
+
+    <script>
+        // Routes (change if your filenames differ)
+        const EMPLOYEE_HOME = "homepage.html";
+        const HR_PORTAL = "hrDashboard.html";
+
+        // DEMO credentials (frontend-only prototype)
+        const USERS = {
+        "scape": { password: "123", role: "employee" },
+        "hr": { password: "hr123", role: "hr" }
+        };
+
+        const emailEl = document.getElementById("email");
+        const passEl = document.getElementById("password");
+        const errorEl = document.getElementById("errorMsg");
+        const signInBtn = document.getElementById("signInBtn");
+        const fillDemoBtn = document.getElementById("fillDemoBtn");
+
+        function setError(msg) {
+        errorEl.textContent = msg || "";
+        }
+
+        function login() {
+        setError("");
+
+        const email = (emailEl.value || "").trim().toLowerCase();
+        const password = passEl.value || "";
+
+        if (!email || !password) {
+            setError("Please enter your email and password.");
+            return;
+        }
+
+        const user = USERS[email];
+        if (!user || user.password !== password) {
+            setError("Invalid credentials. Please try again.");
+            return;
+        }
+
+        // Optional: store session-ish info for your prototype
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userRole", user.role);
+
+        if (user.role === "hr") {
+            location.href = HR_PORTAL;
+        } else {
+            location.href = EMPLOYEE_HOME;
+        }
+        }
+
+        signInBtn.addEventListener("click", login);
+
+        // Enter key submits
+        [emailEl, passEl].forEach(el => {
+        el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") login();
+        });
+        });
+
+        // Quick demo filler
+        fillDemoBtn.addEventListener("click", () => {
+        // toggles between employee and hr each click
+        const current = (emailEl.value || "").trim().toLowerCase();
+        if (current === "employee@scape.sg") {
+            emailEl.value = "hr";
+            passEl.value = "hr123";
+        } else {
+            emailEl.value = "scape";
+            passEl.value = "123";
+        }
+        setError("");
+        passEl.focus();
+        });
+    </script>
+</body>
+</html>

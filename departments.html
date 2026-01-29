@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Departments</title>
+    <link rel="stylesheet" href="styles/departments.css" />
+    </head>
+
+    <body>
+    <header class="topbar">
+        <button class="back-btn" type="button" onclick="history.back()">← Back</button>
+        <h1 class="topbar__title">Departments</h1>
+        <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <div class="title">
+        <h2>Choose a Department</h2>
+    </div>
+
+    <div class="page">
+        <section class="grid" aria-label="Departments">
+        <button class="tile" type="button" onclick="location.href='marketingDepartment.html'">
+            <div class="tile__media tile__media--marketing" aria-hidden="true"></div>
+            <div class="tile__body">
+            <p class="tile__title">Marketing</p>
+            </div>
+        </button>
+
+        <button class="tile" type="button" onclick="location.href='itDepartment.html'">
+            <div class="tile__media tile__media--it" aria-hidden="true"></div>
+            <div class="tile__body">
+            <p class="tile__title">IT</p>
+            </div>
+        </button>
+
+        <button class="tile" type="button" onclick="location.href='logisticsDepartment.html'">
+            <div class="tile__media tile__media--logistics" aria-hidden="true"></div>
+            <div class="tile__body">
+            <p class="tile__title">Logistics</p>
+            </div>
+        </button>
+
+        <button class="tile" type="button" onclick="location.href='hrDepartment.html'">
+            <div class="tile__media tile__media--hr" aria-hidden="true"></div>
+            <div class="tile__body">
+            <p class="tile__title">HR</p>
+            </div>
+        </button>
+
+        <button class="tile" type="button" onclick="location.href='financeDepartment.html'">
+            <div class="tile__media tile__media--finance" aria-hidden="true"></div>
+            <div class="tile__body">
+            <p class="tile__title">Finance</p>
+            </div>
+        </button>
+        </section>
+    </div>
+</body>
+</html>

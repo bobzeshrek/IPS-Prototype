@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!-- Mobile layout -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Tasks</title>
+    <!-- Page styles -->
+    <link rel="stylesheet" href="styles/weeklytasks.css" />
+
+    </head>
+
+    <body>
+    <!-- Top bar -->
+    <header class="topbar">
+        <button class="back-btn" type="button" onclick="history.back()">← Back</button>
+        <h1 class="topbar__title">Weekly Tasks</h1>
+
+        <div class="topbar__right">
+        <!-- Progress label only (no bar) -->
+        <div class="progress">
+            <div class="progress__label" id="progressLabel">Progress: 0%</div>
+        </div>
+        </div>
+    </header>
+
+    <!-- Main layout -->
+    <main class="page">
+        <div class="layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar__title">Weekly Onboarding Tasks</div>
+            <div class="weeks" id="weeks"></div>
+            <button class="reset-btn" id="resetBtn" type="button">Reset Progress</button>
+        </aside>
+
+        <!-- Task panel -->
+        <section class="content">
+            <div class="content__card">
+
+            <div class="content__header">
+                <h2 class="content__title" id="taskTitle">Getting Started</h2>
+                <div class="content__meta" id="taskMeta">Select a task from the left.</div>
+            </div>
+
+            <div class="content__body">
+                <div class="block">
+                <div class="block__label">Instructions</div>
+                <div class="block__text" id="taskInstructions">Choose a task to view its instructions here.</div>
+                </div>
+
+                <div class="block">
+                <div class="block__label">Upload file here</div>
+                <div class="dropzone" id="dropzone">
+                    <div class="dropzone__inner">
+                    <div class="dropzone__title">Drag & Drop</div>
+                    <div class="dropzone__hint">or click to select a file (mock)</div>
+                    </div>
+                    <input class="dropzone__input" id="fileInput" type="file" />
+                </div>
+                <div class="upload-note" id="uploadNote">No file selected.</div>
+                </div>
+
+                <div class="actions">
+                <button class="btn btn--primary" id="submitBtn" type="button" disabled>Submit</button>
+                </div>
+            </div>
+
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <!-- Floating Section Progress (bottom-right) -->
+    <div class="circle-progress" id="circleProgress" aria-label="Section progress">
+        <svg class="circle-progress__svg" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- Track -->
+        <circle class="circle-progress__track" cx="50" cy="50" r="38"></circle>
+        <!-- Bar -->
+        <circle class="circle-progress__bar" id="circleBar" cx="50" cy="50" r="38"></circle>
+        </svg>
+        <div class="circle-progress__center">
+        <span id="circlePct">0%</span>
+        </div>
+    </div>
+
+    <script>
+        const DATA = [
+        {
+            id: "day1",
+            title: "Day 1",
+            tasks: [
+            { id: "d1_t1", title: "Staff pass", instructions: "Collect your staff pass or temporary visitor pass. Upload a photo of the pass (or visitor sticker) as proof." },
+            { id: "d1_t2", title: "Laptop ready", instructions: "Confirm your laptop is issued and you can log in. Upload a photo of your laptop at your desk (or login screen)." },
+            { id: "d1_t3", title: "Email & Wi-Fi", instructions: "Log in to your company email and connect to office Wi-Fi. Upload a screenshot/photo showing email inbox or Wi-Fi connected." },
+            { id: "d1_t4", title: "Onboarding session", instructions: "Attend the onboarding briefing. Upload a photo of your onboarding slide/room name badge (anything as proof)." },
+            { id: "d1_t5", title: "Office tour", instructions: "Complete your office tour (pantry, toilets, exits). Upload a photo from any tour location." },
+            ],
+        },
+        {
+            id: "week1",
+            title: "Week 1: Onboarding & Basics",
+            tasks: [
+            { id: "w1_t1", title: "Training course", instructions: "Complete brand guideline training and submit a screenshot for completion." },
+            { id: "w1_t2", title: "Instagram Drafts", instructions: "Draft 3 Instagram post captions for the upcoming youth talent showcase and submit for supervisor review." },
+            { id: "w1_t3", title: "Festival photos", instructions: "Organise the shared content library by uploading 10+ event photos from last week's festival with consistent naming and tags." },
+            ],
+        },
+        {
+            id: "week2",
+            title: "Week 2: Content Creation Focus",
+            tasks: [
+            { id: "w2_t1", title: "Tiktok ideas", instructions: "Propose and draft 2 TikTok reel ideas (e.g., \"youth entrepreneur tips\" or festival behind-the-scenes) with sample scripts and shot lists." },
+            { id: "w2_t2", title: "Instagram posts", instructions: "Schedule next week's IG Stories and feed posts using the content calendar, including 1 youth festival teaser with RSVP link." },
+            { id: "w2_t3", title: "Video editing", instructions: "Edit 5 short clips from recent esports event into IG Reels format and submit drafts for approval." },
+            { id: "w2_t4", title: "Research", instructions: "Monitor 5 competitor youth accounts (e.g., other hubs or IHL events) and share 3 trend insights in team chat.​" },
+            ],
+        },
+        {
+            id: "week3",
+            title: "Week 3: Campaign Support",
+            tasks: [
+            { id: "w3_t1", title: "Visual editing", instructions: "Adapt festival key visual into 4 social assets (Stories, posts, digital poster) using Canva templates and submit for feedback." },
+            { id: "w3_t2", title: "Youth Festival", instructions: "Assist at youth festival: capture 20+ photos, and draft post-event recap bullets." },
+            { id: "w3_t3", title: "Check links/QR codes", instructions: "Check all live campaign links/QR codes for the Somerset youth fest and report fixes needed by mid-week." },
+            ],
+        },
+        {
+            id: "week4",
+            title: "Week 4: Reporting & Collaboration",
+            tasks: [
+            { id: "w4_t1", title: "Social Performance Report", instructions: "Compile full social performance report for Month 1 (top posts, engagement trends) with 2 recommendations for youth content." },
+            { id: "w4_t2", title: "Feedback", instructions: "Coordinate feedback on vendor banner designs for next festival and consolidate into a one-page summary for the team." },
+            { id: "w4_t3", title: "Talent Showcase Planning", instructions: "Plan content for following week's talent showcase: draft 5 posts, propose 1 collab idea with youth influencers." },
+            { id: "w4_t4", title: "Participant feedback", instructions: "Collect participant feedback from 2 events, summarise 5 quotes/insights, and suggest uses for future marketing." },
+            ],
+        },
+        ];
+
+        const STORAGE_KEY = "weekly_tasks_progress_v1";
+        const SUMMARY_KEY = "weekly_tasks_summary_v1";
+
+        const HR_TICKETS_KEY = "hr_tickets_v1";
+        const PROFILE_DATA_KEY = "profile_data_v1";
+
+        // NEW: remember which section is "active" (opened/selected)
+        const ACTIVE_SECTION_KEY = "weekly_tasks_active_section_v1";
+
+        function loadJSON(key, fallback) {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        try { return JSON.parse(raw); } catch { return fallback; }
+        }
+        function saveJSON(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+        }
+
+        function getCurrentUser() {
+        const p = loadJSON(PROFILE_DATA_KEY, {});
+        return {
+            userId: p.userId || "SCAPE_User_67",
+            name: p.name || "Jaden Koh",
+            dept: p.dept || p.department || "Marketting",
+            role: p.role || "Intern",
+            contact: p.contact || "jaden.koh@scape.sg | +65 6123 4002",
+        };
+        }
+
+        function ensureSectionCompletionTicket(section) {
+        const user = getCurrentUser();
+        const tickets = loadJSON(HR_TICKETS_KEY, []);
+
+        const ticketId = `TASK-${section.id}-${user.userId}`;
+        const already = tickets.some(t => t.id === ticketId);
+        if (already) return;
+
+        const ticket = {
+            id: ticketId,
+            type: "TASK_SECTION",
+            status: "PENDING",
+            createdAt: Date.now(),
+            decidedAt: null,
+            requestedBy: {
+            userId: user.userId,
+            name: user.name,
+            dept: user.dept,
+            role: user.role,
+            contact: user.contact,
+            },
+            change: {
+            field: "Section completion",
+            sectionId: section.id,
+            sectionTitle: section.title,
+            newValue: "Completed",
+            reason: "Auto-generated when all tasks in this section were submitted."
+            }
+        };
+
+        tickets.unshift(ticket);
+        saveJSON(HR_TICKETS_KEY, tickets);
+        }
+
+        function checkAllSectionsAndCreateTickets() {
+        for (const section of DATA) {
+            if (allTasksDone(section)) {
+            ensureSectionCompletionTicket(section);
+            }
+        }
+        }
+
+        function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { completed: {}, selectedTaskId: null };
+        try { return JSON.parse(raw); } catch { return { completed: {}, selectedTaskId: null }; }
+        }
+
+        function saveState(state) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        let state = loadState();
+
+        const weeksEl = document.getElementById("weeks");
+        const progressLabel = document.getElementById("progressLabel");
+
+        const taskTitleEl = document.getElementById("taskTitle");
+        const taskMetaEl = document.getElementById("taskMeta");
+        const taskInstructionsEl = document.getElementById("taskInstructions");
+
+        const dropzone = document.getElementById("dropzone");
+        const fileInput = document.getElementById("fileInput");
+        const uploadNote = document.getElementById("uploadNote");
+
+        const submitBtn = document.getElementById("submitBtn");
+        const resetBtn = document.getElementById("resetBtn");
+
+        // Circle progress elements
+        const circleBar = document.getElementById("circleBar");
+        const circlePct = document.getElementById("circlePct");
+
+        let selectedFile = null;
+
+        function isTaskCompleted(taskId) {
+        return !!state.completed[taskId];
+        }
+
+        function setTaskCompleted(taskId, value) {
+        state.completed[taskId] = value;
+        saveState(state);
+        }
+
+        function allTasksDone(section) {
+        return section.tasks.every(t => isTaskCompleted(t.id));
+        }
+
+        function weekUnlocked(index) {
+        if (index === 0) return true;
+        return allTasksDone(DATA[index - 1]);
+        }
+
+        function getTotalTasks() {
+        return DATA.reduce((sum, w) => sum + w.tasks.length, 0);
+        }
+
+        function getCompletedCount() {
+        return Object.values(state.completed).filter(Boolean).length;
+        }
+
+        function getSectionDoneCount(section) {
+        return section.tasks.reduce((sum, t) => sum + (isTaskCompleted(t.id) ? 1 : 0), 0);
+        }
+
+        function computeProgressSummary() {
+        const totalTasks = getTotalTasks();
+        const completedTasks = getCompletedCount();
+        const overallPct = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+        // "Current section" = first section not fully completed; if all done, last section.
+        let currentSection = DATA.find(sec => !allTasksDone(sec)) || DATA[DATA.length - 1];
+
+        const secTotal = currentSection.tasks.length;
+        const secDone = getSectionDoneCount(currentSection);
+        const sectionPct = secTotal === 0 ? 0 : Math.round((secDone / secTotal) * 100);
+
+        const perSection = {};
+        for (const sec of DATA) {
+            const done = getSectionDoneCount(sec);
+            const total = sec.tasks.length;
+            perSection[sec.id] = {
+            title: sec.title,
+            done,
+            total,
+            pct: total === 0 ? 0 : Math.round((done / total) * 100),
+            completed: allTasksDone(sec)
+            };
+        }
+
+        const completedTaskIds = Object.entries(state.completed)
+            .filter(([, v]) => v)
+            .map(([k]) => k);
+
+        const pendingTaskIds = [];
+        for (const sec of DATA) {
+            for (const t of sec.tasks) {
+            if (!isTaskCompleted(t.id)) pendingTaskIds.push(t.id);
+            }
+        }
+
+        return {
+            updatedAt: Date.now(),
+            overall: { completedTasks, totalTasks, pct: overallPct },
+            currentSection: {
+            id: currentSection.id,
+            title: currentSection.title,
+            done: secDone,
+            total: secTotal,
+            pct: sectionPct
+            },
+            perSection,
+            completedTaskIds,
+            pendingTaskIds
+        };
+        }
+
+        function saveProgressSummary() {
+        const summary = computeProgressSummary();
+        saveJSON(SUMMARY_KEY, summary);
+        return summary;
+        }
+
+        // ===== NEW: Active section helpers =====
+        function getActiveSectionId() {
+        const saved = localStorage.getItem(ACTIVE_SECTION_KEY);
+        if (saved && DATA.some(s => s.id === saved)) return saved;
+        // fallback to currentSection if nothing saved
+        const summary = computeProgressSummary();
+        return summary.currentSection.id;
+        }
+
+        function setActiveSectionId(sectionId) {
+        localStorage.setItem(ACTIVE_SECTION_KEY, sectionId);
+        updateCircleProgress();
+        }
+
+        // ===== NEW: Circular progress renderer =====
+        function updateCircleProgress() {
+        const activeId = getActiveSectionId();
+        const section = DATA.find(s => s.id === activeId);
+        if (!section) return;
+
+        const done = getSectionDoneCount(section);
+        const total = section.tasks.length;
+        const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+
+        circlePct.textContent = `${pct}%`;
+
+        // SVG circle math
+        const r = 38;
+        const circumference = 2 * Math.PI * r;
+        const filled = (pct / 100) * circumference;
+        const remaining = circumference - filled;
+
+        circleBar.style.strokeDasharray = `${filled} ${remaining}`;
+        }
+
+        function updateProgressUI() {
+        const summary = saveProgressSummary();
+        progressLabel.textContent =
+            `Progress: ${summary.overall.pct}% • Current: ${summary.currentSection.title} (${summary.currentSection.pct}%)`;
+
+        // keep the floating widget in sync too
+        updateCircleProgress();
+        }
+
+        function findTaskById(taskId) {
+        for (const w of DATA) {
+            const t = w.tasks.find(x => x.id === taskId);
+            if (t) return { week: w, task: t };
+        }
+        return null;
+        }
+
+        function updateSubmitButton() {
+        const hasTask = !!state.selectedTaskId;
+        const done = hasTask ? isTaskCompleted(state.selectedTaskId) : false;
+
+        if (!hasTask) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submit";
+            return;
+        }
+
+        if (done) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitted ✓";
+            return;
+        }
+
+        submitBtn.textContent = "Submit";
+        submitBtn.disabled = !selectedFile;
+        }
+
+        function renderWeeks() {
+        weeksEl.innerHTML = "";
+
+        DATA.forEach((week, i) => {
+            const unlocked = weekUnlocked(i);
+
+            const details = document.createElement("details");
+            details.className = "week";
+            details.dataset.weekId = week.id;
+
+            const summary = document.createElement("summary");
+            summary.className = "week__summary";
+
+            // NEW: when a section is opened, make it the active section for the circle indicator
+            summary.addEventListener("click", () => {
+            setActiveSectionId(week.id); // this "resets" to that section’s progress
+            });
+
+            const left = document.createElement("div");
+            left.className = "week__left";
+
+            const title = document.createElement("div");
+            title.className = "week__title";
+            title.textContent = week.title;
+
+            const status = document.createElement("div");
+            status.className = "week__status";
+
+            const secDone = getSectionDoneCount(week);
+            const secTotal = week.tasks.length;
+            const secPct = secTotal === 0 ? 0 : Math.round((secDone / secTotal) * 100);
+
+            if (i === 0) {
+            if (allTasksDone(week)) {
+                status.textContent = `Completed • ${secPct}%`;
+                status.classList.add("is-complete");
+            } else {
+                status.textContent = `Complete Day 1 to proceed with Week 1 • ${secPct}%`;
+                status.classList.add("is-available");
+            }
+            } else if (unlocked) {
+            status.textContent = (allTasksDone(week) ? `Completed • ${secPct}%` : `Available • ${secPct}%`);
+            status.classList.add(allTasksDone(week) ? "is-complete" : "is-available");
+            } else {
+            status.textContent = "Locked";
+            status.classList.add("is-locked");
+            }
+
+            left.appendChild(title);
+            left.appendChild(status);
+
+            const chevron = document.createElement("div");
+            chevron.className = "week__chev";
+            chevron.textContent = "▾";
+
+            summary.appendChild(left);
+            summary.appendChild(chevron);
+
+            const body = document.createElement("div");
+            body.className = "week__body";
+
+            if (!unlocked) {
+            const lockedMsg = document.createElement("div");
+            lockedMsg.className = "locked-msg";
+            lockedMsg.textContent = "Complete the previous section to unlock tasks.";
+            body.appendChild(lockedMsg);
+            } else {
+            week.tasks.forEach(task => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "task";
+                btn.dataset.taskId = task.id;
+
+                const check = document.createElement("span");
+                check.className = "task__check";
+                check.textContent = isTaskCompleted(task.id) ? "✓" : "";
+
+                const name = document.createElement("span");
+                name.className = "task__name";
+                name.textContent = task.title;
+
+                const statusText = document.createElement("span");
+                statusText.className = "task__status";
+                statusText.textContent = isTaskCompleted(task.id) ? "Submitted" : "Not submitted";
+                statusText.style.marginLeft = "auto";
+                statusText.style.opacity = "0.75";
+                statusText.style.fontSize = "0.9em";
+
+                btn.appendChild(check);
+                btn.appendChild(name);
+                btn.appendChild(statusText);
+
+                if (state.selectedTaskId === task.id) {
+                btn.classList.add("is-selected");
+                }
+
+                btn.addEventListener("click", () => {
+                state.selectedTaskId = task.id;
+                saveState(state);
+
+                // NEW: selecting a task also makes that section active for the circle
+                setActiveSectionId(week.id);
+
+                renderWeeks();
+                renderTaskPanel(task.id);
+                });
+
+                body.appendChild(btn);
+            });
+            }
+
+            details.appendChild(summary);
+            details.appendChild(body);
+
+            // auto-open the section that contains the selected task
+            if (state.selectedTaskId) {
+            const selected = findTaskById(state.selectedTaskId);
+            if (selected && selected.week.id === week.id) details.open = true;
+            } else {
+            // if no task selected, open the active section (nice UX)
+            const activeId = getActiveSectionId();
+            if (activeId === week.id) details.open = true;
+            }
+
+            weeksEl.appendChild(details);
+        });
+
+        updateProgressUI();
+        }
+
+        function renderTaskPanel(taskId) {
+        const found = findTaskById(taskId);
+        if (!found) return;
+
+        const { week, task } = found;
+
+        taskTitleEl.textContent = task.title;
+
+        const secDone = getSectionDoneCount(week);
+        const secTotal = week.tasks.length;
+        const secPct = secTotal === 0 ? 0 : Math.round((secDone / secTotal) * 100);
+
+        taskMetaEl.textContent =
+            `${week.title} • ${isTaskCompleted(task.id) ? "Submitted" : "Not submitted"} • Section: ${secPct}%`;
+
+        taskInstructionsEl.textContent = task.instructions;
+
+        selectedFile = null;
+        uploadNote.textContent = "No file selected.";
+        fileInput.value = "";
+        updateSubmitButton();
+
+        updateProgressUI();
+        }
+
+        submitBtn.addEventListener("click", () => {
+        if (!state.selectedTaskId) return;
+        if (!selectedFile) return;
+
+        setTaskCompleted(state.selectedTaskId, true);
+
+        checkAllSectionsAndCreateTickets();
+
+        renderWeeks();
+        renderTaskPanel(state.selectedTaskId);
+        });
+
+        dropzone.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fileInput.click();
+        });
+
+        fileInput.addEventListener("click", (e) => {
+        e.stopPropagation();
+        });
+
+        fileInput.addEventListener("change", () => {
+        const file = fileInput.files && fileInput.files[0];
+        selectedFile = file || null;
+        uploadNote.textContent = file ? `Selected: ${file.name} (mock)` : "No file selected.";
+        updateSubmitButton();
+        });
+
+        ["dragenter", "dragover"].forEach(evt =>
+        dropzone.addEventListener(evt, (e) => {
+            e.preventDefault();
+            dropzone.classList.add("is-dragover");
+        })
+        );
+
+        ["dragleave", "drop"].forEach(evt =>
+        dropzone.addEventListener(evt, (e) => {
+            e.preventDefault();
+            dropzone.classList.remove("is-dragover");
+        })
+        );
+
+        dropzone.addEventListener("drop", () => {
+        selectedFile = { name: "Dropped file (mock)" };
+        uploadNote.textContent = "File dropped (mock).";
+        updateSubmitButton();
+        });
+
+        resetBtn.addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(SUMMARY_KEY);
+        localStorage.removeItem(ACTIVE_SECTION_KEY);
+
+        state = loadState();
+
+        taskTitleEl.textContent = "Getting Started";
+        taskMetaEl.textContent = "Select a task from the left.";
+        taskInstructionsEl.textContent = "Choose a task to view its instructions here.";
+        selectedFile = null;
+        uploadNote.textContent = "No file selected.";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submit";
+
+        renderWeeks();
+        });
+
+        // Initial render
+        renderWeeks();
+
+        // Existing behavior
+        checkAllSectionsAndCreateTickets();
+
+        if (state.selectedTaskId) renderTaskPanel(state.selectedTaskId);
+        else updateProgressUI();
+    </script>
+</body>
+</html>

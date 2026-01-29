@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buddy Tasks</title>
+  <link rel="stylesheet" href="styles/buddy.css" />
+</head>
+
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <button class="back-btn" type="button" onclick="history.back()">← Back</button>
+    <h1 class="topbar__title">Buddy Tasks</h1>
+    <div class="topbar__right">
+      <div class="pill" id="progressPill">0/0 submitted</div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="layout">
+
+      <aside class="buddy-card">
+        <div class="buddy-card__title">Your Buddy</div>
+
+        <!-- Buddy block now matches Profile page (avatar-block + body-block) -->
+        <button class="buddy" id="buddyBtn" type="button" aria-label="Open buddy details">
+          <div class="buddy-visual">
+            <div class="avatar-block" aria-hidden="true">
+              <img class="avatar-img" id="buddyPfp" src="assets/account_img.jpg" alt="Buddy profile photo" />
+              <!-- no placeholder on buddy page -->
+            </div>
+
+            <div class="body-block" aria-hidden="true"></div>
+          </div>
+        </button>
+
+        <div class="buddy-info">
+          <div class="buddy-name" id="buddyName">Jaden Koh</div>
+
+          <div class="buddy-row"><span class="k">Role:</span> <span id="buddyRole">Senior Manager Youth & Content Marketing</span></div>
+          <div class="buddy-row"><span class="k">Contact:</span> <span id="buddyContact">jaden.koh@scape.sg</span></div>
+
+          <div class="buddy-intro" id="buddyIntro">
+            Yo, I’m Jaden 😎 I’m the dude behind a lot of the content and youth campaigns at *SCAPE, always testing new formats to see what slaps and what flops. Outside work I’m either shooting street photos, grinding ranked games, or editing random videos at 2am for “fun” 💀
+          </div>
+        </div>
+
+        <div class="buddy-hint">Tip: Click a task on the right to upload and submit.</div>
+      </aside>
+
+      <section class="content">
+        <div class="content__card">
+          <div class="content__header">
+            <h2 class="content__title">Weekly Check-ins</h2>
+            <div class="content__meta">
+              Due every <b>Friday</b> for <b>2 months</b>. Upload proof to submit.
+            </div>
+          </div>
+
+          <div class="tasks" id="tasks"></div>
+
+          <div class="content__footer">
+            <button class="reset-btn" id="resetBtn" type="button">Reset Submissions</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Buddy modal -->
+  <div class="modal is-hidden" id="buddyModal" aria-hidden="true">
+    <div class="modal__overlay" id="buddyOverlay"></div>
+    <div class="modal__panel" role="dialog" aria-label="Buddy details">
+      <div class="modal__header">
+        <div class="modal__title">Buddy Details</div>
+        <button class="icon-btn" id="buddyClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modal__body">
+        <div class="buddy-pop__name" id="popName">Ameen</div>
+        <div class="buddy-pop__row"><span class="k">Role:</span> <span id="popRole"></span></div>
+        <div class="buddy-pop__row"><span class="k">Contact:</span> <span id="popContact"></span></div>
+        <div class="buddy-pop__intro" id="popIntro"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "buddy_tasks_submissions_v1";
+
+    const BUDDY = {
+      name: "Zara Malik",
+      role: "HR & People Experience Manager",
+      contact: "zara.malik@scape.sg | +65 6123 4031",
+      intro: "Hey, I’m Zara 💼✨\nI look after the people side of *SCAPE—from hiring and onboarding to making sure our culture actually feels safe, inclusive, and human. I care a lot about employee experience and building systems that support growth without feeling rigid or corporate. Outside of work, I’m into wellness routines, long walks to clear my head, and curating playlists that match my mood way too precisely 🎧 ITS LIT",
+      photo: "assets/buddy.jpg"
+    };
+
+    const TASK_TEMPLATES = [
+      { title: "Week 1 Check-in", instructions: "Share what you did this week + 1 question for your buddy." },
+      { title: "Week 2 Check-in", instructions: "Upload a photo/screenshot of your work or learning notes." },
+      { title: "Week 3 Check-in", instructions: "What was hard this week? Upload a short reflection (image/pdf)." },
+      { title: "Week 4 Check-in", instructions: "Upload proof of attending a session / tour / meeting." },
+      { title: "Week 5 Check-in", instructions: "Upload a snapshot of your progress + next week’s plan." },
+      { title: "Week 6 Check-in", instructions: "Upload something you created (draft, slide, mockup, etc.)." },
+      { title: "Week 7 Check-in", instructions: "Upload proof you connected with someone new in the team." },
+      { title: "Week 8 Check-in", instructions: "Final check-in: upload a short recap of your first 2 months." }
+    ];
+
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { submitted: {} };
+      try { return JSON.parse(raw); } catch { return { submitted: {} }; }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function pad2(n){ return String(n).padStart(2, "0"); }
+
+    function fmtDate(d) {
+      const parts = new Intl.DateTimeFormat("en-SG", {
+        weekday: "short", day: "2-digit", month: "short", year: "numeric"
+      }).formatToParts(d);
+
+      const get = (t) => parts.find(p => p.type === t)?.value || "";
+      return `${get("weekday")}, ${get("day")} ${get("month")} ${get("year")}`;
+    }
+
+    function ymd(d){
+      return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+    }
+
+    function getNextFriday(fromDate = new Date()) {
+      const d = new Date(fromDate);
+      d.setHours(0,0,0,0);
+      const day = d.getDay(); // Fri=5
+      const diff = (5 - day + 7) % 7;
+      d.setDate(d.getDate() + diff);
+      return d;
+    }
+
+    function generateFridays(count = 8) {
+      const first = getNextFriday(new Date());
+      const dates = [];
+      for (let i = 0; i < count; i++) {
+        const d = new Date(first);
+        d.setDate(first.getDate() + i * 7);
+        dates.push(d);
+      }
+      return dates;
+    }
+
+    function isOverdue(dueDate, submitted) {
+      if (submitted) return false;
+      const now = new Date();
+      now.setHours(0,0,0,0);
+      const due = new Date(dueDate);
+      due.setHours(0,0,0,0);
+      return now > due;
+    }
+
+    // =========================
+    // DOM
+    // =========================
+    const tasksEl = document.getElementById("tasks");
+    const progressPill = document.getElementById("progressPill");
+    const resetBtn = document.getElementById("resetBtn");
+
+    document.getElementById("buddyName").textContent = BUDDY.name;
+    document.getElementById("buddyRole").textContent = BUDDY.role;
+    document.getElementById("buddyContact").textContent = BUDDY.contact;
+    document.getElementById("buddyIntro").textContent = BUDDY.intro;
+    document.getElementById("buddyPfp").src = BUDDY.photo;
+
+    // Buddy popup
+    const buddyModal = document.getElementById("buddyModal");
+    const buddyOverlay = document.getElementById("buddyOverlay");
+    const buddyClose = document.getElementById("buddyClose");
+    const buddyBtn = document.getElementById("buddyBtn");
+
+    function show(el){ el.classList.remove("is-hidden"); el.setAttribute("aria-hidden","false"); }
+    function hide(el){ el.classList.add("is-hidden"); el.setAttribute("aria-hidden","true"); }
+
+    buddyBtn.addEventListener("click", () => {
+      document.getElementById("popName").textContent = BUDDY.name;
+      document.getElementById("popRole").textContent = BUDDY.role;
+      document.getElementById("popContact").textContent = BUDDY.contact;
+      document.getElementById("popIntro").textContent = BUDDY.intro;
+      show(buddyModal);
+    });
+
+    buddyOverlay.addEventListener("click", () => hide(buddyModal));
+    buddyClose.addEventListener("click", () => hide(buddyModal));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hide(buddyModal);
+    });
+
+    // =========================
+    // RENDER TASKS
+    // =========================
+    let state = loadState();
+
+    const dueDates = generateFridays(8);
+
+    const TASKS = TASK_TEMPLATES.map((t, idx) => {
+      const due = dueDates[idx] || new Date();
+      return {
+        id: `buddy_week_${idx+1}_${ymd(due)}`,
+        title: t.title,
+        instructions: t.instructions,
+        due
+      };
+    });
+
+    function updateProgress() {
+      const total = TASKS.length;
+      const done = TASKS.filter(t => !!state.submitted[t.id]).length;
+      progressPill.textContent = `${done}/${total} submitted`;
+    }
+
+    function render() {
+      tasksEl.innerHTML = "";
+
+      TASKS.forEach((task) => {
+        const submitted = state.submitted[task.id];
+        const overdue = isOverdue(task.due, submitted);
+
+        const details = document.createElement("details");
+        details.className = "task";
+
+        const summary = document.createElement("summary");
+        summary.className = "task__summary";
+
+        const left = document.createElement("div");
+        left.className = "task__left";
+
+        const tTitle = document.createElement("div");
+        tTitle.className = "task__title";
+        tTitle.textContent = task.title;
+
+        const meta = document.createElement("div");
+        meta.className = "task__meta";
+        meta.textContent = `Due: ${fmtDate(task.due)}`;
+
+        left.appendChild(tTitle);
+        left.appendChild(meta);
+
+        const status = document.createElement("div");
+        status.className = "task__status";
+        if (submitted) {
+          status.textContent = "Submitted ✓";
+          status.classList.add("is-submitted");
+        } else if (overdue) {
+          status.textContent = "Overdue";
+          status.classList.add("is-overdue");
+        } else {
+          status.textContent = "Pending";
+          status.classList.add("is-pending");
+        }
+
+        summary.appendChild(left);
+        summary.appendChild(status);
+
+        const body = document.createElement("div");
+        body.className = "task__body";
+
+        body.innerHTML = `
+          <div class="block">
+            <div class="block__label">Instructions</div>
+            <div class="block__text">${task.instructions}</div>
+          </div>
+
+          <div class="block">
+            <div class="block__label">Upload file</div>
+
+            <div class="dropzone" data-task="${task.id}">
+              <div class="dropzone__inner">
+                <div class="dropzone__title">Drag & Drop</div>
+                <div class="dropzone__hint">or click to select a file</div>
+              </div>
+
+              <input class="dropzone__input" type="file" />
+            </div>
+
+            <div class="upload-note">No file selected.</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary" type="button">Submit</button>
+          </div>
+        `;
+
+        details.appendChild(summary);
+        details.appendChild(body);
+        tasksEl.appendChild(details);
+
+        const dropzone = body.querySelector(".dropzone");
+        const input = body.querySelector(".dropzone__input");
+        const note = body.querySelector(".upload-note");
+        const submitBtn = body.querySelector(".btn");
+
+        let selectedFile = null;
+
+        if (submitted) {
+          note.textContent = `Submitted: ${submitted.fileName}`;
+          submitBtn.textContent = "Submitted ✓";
+          submitBtn.disabled = true;
+          input.disabled = true;
+          dropzone.classList.add("is-disabled");
+        } else {
+          submitBtn.disabled = true;
+        }
+
+        input.addEventListener("change", () => {
+          if (submitted) return;
+          const file = input.files && input.files[0];
+          selectedFile = file || null;
+
+          note.textContent = selectedFile
+            ? `Selected: ${selectedFile.name}`
+            : "No file selected.";
+
+          submitBtn.disabled = !selectedFile;
+        });
+
+        ["dragenter","dragover"].forEach(evt => {
+          dropzone.addEventListener(evt, (e) => {
+            if (submitted) return;
+            e.preventDefault();
+            dropzone.classList.add("is-dragover");
+          });
+        });
+
+        ["dragleave","drop"].forEach(evt => {
+          dropzone.addEventListener(evt, (e) => {
+            if (submitted) return;
+            e.preventDefault();
+            dropzone.classList.remove("is-dragover");
+          });
+        });
+
+        dropzone.addEventListener("drop", (e) => {
+          if (submitted) return;
+          e.preventDefault();
+
+          const files = e.dataTransfer && e.dataTransfer.files;
+          if (!files || !files.length) return;
+
+          selectedFile = files[0];
+          note.textContent = `Selected: ${selectedFile.name}`;
+          submitBtn.disabled = false;
+        });
+
+        submitBtn.addEventListener("click", () => {
+          if (submitted) return;
+          if (!selectedFile) return;
+
+          state.submitted[task.id] = {
+            at: Date.now(),
+            fileName: selectedFile.name,
+            size: selectedFile.size,
+            type: selectedFile.type
+          };
+
+          saveState(state);
+          render();
+          updateProgress();
+        });
+      });
+
+      updateProgress();
+    }
+
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      state = loadState();
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

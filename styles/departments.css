@@ -1,0 +1,153 @@
+:root{
+    --orange:#FF6200;
+    --black:#0D0D0D;
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --border: rgba(13,13,13,.12);
+    --shadow: 0 10px 25px rgba(0,0,0,.08);
+    --radius: 18px;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--black);
+}
+
+/* Topbar (same vibe as your other pages) */
+.topbar{
+    position: sticky;
+    top:0;
+    z-index:100;
+    height: 56px;
+    padding: 0 14px;
+    background: var(--black);
+    color:#fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+
+    display:grid;
+    grid-template-columns: 120px 1fr 120px;
+    align-items:center;
+}
+
+.topbar__title{
+    margin:0;
+    text-align:center;
+    font-size: 18px;
+    letter-spacing:.2px;
+}
+
+.topbar__spacer{ height: 1px; }
+
+.back-btn{
+    justify-self: start;
+    border:0;
+    background: rgba(255,255,255,.12);
+    color:#fff;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor:pointer;
+}
+.back-btn:hover{ background: rgba(255,255,255,.18); }
+
+/* Title */
+.title{
+    text-align:center;
+    padding: 16px 10px 0;
+}
+
+.title h2{
+    margin:0;
+    font-size: 22px;
+    letter-spacing:.1px;
+    color: var(--black);
+}
+
+/* Layout container (same as homepage) */
+.page{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 18px 80px;
+}
+
+/* Grid (same) */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 18px;
+    margin-top: 16px;
+}
+
+@media (max-width:900px){
+    .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width:560px){
+    .grid{ grid-template-columns: 1fr; }
+}
+
+/* Tiles (same) */
+.tile{
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow:hidden;
+
+    width: 100%;
+    padding: 0;
+    text-align:left;
+    cursor:pointer;
+
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.tile:hover{
+    transform: translateY(-2px);
+    border-color: rgba(13,13,13,.22);
+    box-shadow: 0 14px 34px rgba(0,0,0,.10);
+}
+
+.tile:active{
+    transform: translateY(0px) scale(.99);
+}
+
+.tile:focus-visible{
+    outline: 3px solid rgba(255,98,0,.45);
+    outline-offset: 2px;
+}
+
+.tile__media{
+    height: 140px;
+    background: linear-gradient(135deg, rgba(255,98,0,.12), rgba(13,13,13,.06));
+    display:grid;
+    place-items:center;
+    border-bottom: 1px dashed rgba(13,13,13,.18);
+}
+
+.tile__body{
+    padding: 14px 14px 16px;
+}
+
+.tile__title{
+    margin:0;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.tile__media{
+    height: 140px;              
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.tile__media--marketing{ background-image: url("../assets/marketingCover.jpg"); }
+.tile__media--it{        background-image: url("../assets/itCover.jpg"); }
+.tile__media--logistics{ background-image: url("../assets/logisticsCover.jpg"); }
+.tile__media--hr{        background-image: url("../assets/hrCover.jpg"); }
+.tile__media--finance{   background-image: url("../assets/financeCover.jpg"); }

@@ -1,0 +1,871 @@
+/* =========================
+   Weekly Tasks — FULL CSS
+   Clean + works + responsive
+   Fixes accordion clipping (shows all tasks)
+========================= */
+
+:root{
+  --brand-primary: #FF6200;   /* Blaze Orange */
+  --brand-dark: #0D0D0D;      /* Cod Gray */
+
+  --bg: #f7f7f7;
+  --card: #ffffff;
+  --text: #0D0D0D;
+  --muted: #6b6b6b;
+  --border: #e6e6e6;
+
+  --shadow: 0 10px 28px rgba(0,0,0,.14);
+  --radius: 18px;
+
+  /* Full-screen app sizing */
+  --topbar-h: 56px;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden; /* desktop app-like */
+}
+
+/* =========================
+   TOP BAR
+========================= */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--brand-dark);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 12px 16px;
+  min-height: var(--topbar-h);
+}
+
+.topbar__title{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.topbar__right{
+  justify-self: end;
+}
+
+.back-btn{
+  justify-self: start;
+  border: none;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 800;
+}
+.back-btn:hover{ background: rgba(255,255,255,.18); }
+
+/* Progress label */
+.progress{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 220px;
+}
+.progress__label{
+  font-size: 13px;
+  font-weight: 900;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px){
+  .progress{ min-width: auto; }
+  .progress__label{ padding: 9px 12px; font-size: 12px; }
+}
+
+/* =========================
+   LAYOUT (Desktop)
+========================= */
+.page{
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  height: calc(100vh - var(--topbar-h));
+}
+
+.layout{
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 0;
+  height: 100%;
+  min-height: 0; /* critical for nested scroll containers */
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar{
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 16px;
+  height: 100%;
+  overflow: hidden; /* contain inner scroll */
+  min-height: 0;
+}
+
+.sidebar__title{
+  font-weight: 1000;
+  margin: 6px 6px 12px;
+  color: var(--brand-dark);
+}
+
+/* Scroll area for weeks list */
+.weeks{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  max-height: calc(100% - 110px);
+  min-height: 0;
+}
+
+/* =========================
+   WEEK ACCORDION (Fixed)
+   Shows ALL tasks, no clipping
+========================= */
+.week{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+
+  /* IMPORTANT:
+     Do NOT hide overflow, or the opened body can get clipped
+  */
+  overflow: visible;
+}
+
+.week__summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  user-select: none;
+}
+.week__summary::-webkit-details-marker{ display: none; }
+
+.week__left{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.week__title{
+  font-weight: 1000;
+}
+
+.week__status{
+  font-size: 12px;
+  font-weight: 900;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.week__status.is-available{
+  background: rgba(255,98,0,.14);
+  border: 1px solid rgba(255,98,0,.35);
+  color: var(--brand-dark);
+}
+
+.week__status.is-complete{
+  background: rgba(13,13,13,.08);
+  border: 1px solid rgba(13,13,13,.20);
+  color: var(--brand-dark);
+}
+
+.week__status.is-locked{
+  background: rgba(13,13,13,.06);
+  border: 1px solid rgba(13,13,13,.14);
+  color: var(--muted);
+}
+
+.week__chev{
+  font-weight: 1000;
+  color: var(--brand-primary);
+  transition: transform .12s ease;
+}
+
+.week[open] .week__chev{
+  transform: rotate(180deg);
+}
+
+.week__body{
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  /* ensure body never clips */
+  overflow: visible;
+  max-height: none;
+}
+
+.locked-msg{
+  color: var(--muted);
+  font-size: 13px;
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px dashed rgba(13,13,13,.18);
+}
+
+/* =========================
+   TASK BUTTONS
+========================= */
+.task{
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 10px;
+  align-items: center;
+
+  text-align: left;
+  transition: border-color .12s ease, transform .12s ease, background .12s ease;
+}
+
+.task:hover{
+  border-color: rgba(255,98,0,.45);
+  transform: translateY(-1px);
+}
+
+.task.is-selected{
+  border-color: var(--brand-primary);
+  background: rgba(255,98,0,.08);
+}
+
+.task__check{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 2px solid rgba(13,13,13,.22);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 1000;
+  color: var(--brand-primary);
+}
+
+.task__name{
+  font-weight: 850;
+  color: var(--brand-dark);
+}
+
+/* Optional: if you want task__status to be consistent (even though you set inline styles) */
+.task__status{
+  opacity: .75;
+  font-size: .9em;
+  white-space: nowrap;
+}
+
+/* =========================
+   RESET BUTTON
+========================= */
+.reset-btn{
+  margin-top: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-weight: 950;
+  background: rgba(13,13,13,.06);
+  color: var(--brand-dark);
+}
+.reset-btn:hover{ background: rgba(13,13,13,.10); }
+
+/* =========================
+   RIGHT CONTENT PANEL
+========================= */
+.content{
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.content__card{
+  background: var(--card);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.content__header{
+  padding: 14px 16px;
+  border-bottom: 3px solid var(--brand-primary);
+  background: linear-gradient(135deg, rgba(255,98,0,.10), rgba(13,13,13,.06));
+  flex: 0 0 auto;
+}
+
+.content__title{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 1000;
+}
+
+.content__meta{
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.content__body{
+  padding: 18px;
+  overflow-y: auto;   /* scroll inside panel */
+  overflow-x: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* =========================
+   BLOCKS
+========================= */
+.block{ margin-bottom: 14px; }
+
+.block__label{
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.block__text{
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  color: var(--brand-dark);
+  min-height: 72px;
+}
+
+/* =========================
+   DROPZONE
+========================= */
+.dropzone{
+  position: relative;
+  border: 2px dashed rgba(13,13,13,.22);
+  border-radius: 16px;
+  padding: 18px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color .12s ease, background .12s ease;
+}
+.dropzone:hover{
+  border-color: rgba(255,98,0,.55);
+  background: rgba(255,98,0,.06);
+}
+.dropzone.is-dragover{
+  border-color: var(--brand-primary);
+  background: rgba(255,98,0,.10);
+}
+
+.dropzone__inner{ text-align: center; }
+
+.dropzone__title{ font-weight: 1000; }
+
+.dropzone__hint{
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.dropzone__input{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-note{
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+.actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+
+  position: sticky;
+  bottom: 0;
+  padding: 12px 0 0;
+  background: linear-gradient(to top, var(--card) 70%, rgba(255,255,255,0));
+}
+
+.btn{
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.btn--primary{
+  background: var(--brand-primary);
+  color: #fff;
+}
+.btn--primary:hover{ filter: brightness(.96); }
+
+.btn--ghost{
+  background: rgba(13,13,13,.06);
+  color: var(--brand-dark);
+}
+.btn--ghost:hover{ background: rgba(13,13,13,.10); }
+
+/* =========================
+   OPTIONAL SCROLLBARS
+========================= */
+.weeks::-webkit-scrollbar,
+.content__body::-webkit-scrollbar{
+  width: 10px;
+}
+.weeks::-webkit-scrollbar-thumb,
+.content__body::-webkit-scrollbar-thumb{
+  background: rgba(13,13,13,.18);
+  border-radius: 999px;
+}
+.weeks::-webkit-scrollbar-track,
+.content__body::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+/* =========================
+   MOBILE / TABLET
+   Stack panels; allow normal page scroll
+========================= */
+@media (max-width: 980px){
+  body{ overflow: auto; }
+  .page{ height: auto; }
+
+  .layout{
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .sidebar{
+    height: auto;
+    overflow: visible;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .weeks{
+    max-height: 320px; /* keep list manageable */
+  }
+
+  .content{
+    height: auto;
+    overflow: visible;
+  }
+
+  .content__card{
+    height: auto;
+  }
+
+  .content__body{
+    overflow: visible;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 480px){
+  .topbar{
+    padding: 10px 12px;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 10px;
+  }
+
+  .topbar__title{
+    font-size: 16px;
+  }
+
+  .back-btn{
+    padding: 7px 10px;
+    border-radius: 10px;
+  }
+
+  .sidebar{
+    padding: 12px;
+  }
+
+  .content__body{
+    padding: 14px;
+  }
+
+  .task{
+    grid-template-columns: 22px 1fr;
+  }
+
+  .task__status{
+    display: none; /* keeps rows clean on tiny screens */
+  }
+}
+
+
+        .circle-progress {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 150px;
+        height: 150px;
+        z-index: 9999;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.92);
+        box-shadow: 0 12px 28px rgba(0,0,0,.15);
+        border: 1px solid rgba(0,0,0,.10);
+        display: grid;
+        place-items: center;
+        user-select: none;
+        -webkit-user-select: none;
+        }
+
+        .circle-progress__svg {
+        width: 150px;
+        height: 150px;
+        transform: rotate(-90deg);
+        display: block;
+        }
+
+        .circle-progress__track {
+        fill: none;
+        stroke: rgba(0,0,0,.12);
+        stroke-width: 8;
+        }
+
+        .circle-progress__bar {
+        fill: none;
+        stroke: #FF6200;
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-dasharray: 0 999;
+        transition: stroke-dasharray 250ms ease;
+        }
+
+        .circle-progress__center {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 14px;
+        color: rgba(13,13,13,.88);
+        text-align: center;
+        line-height: 1.05;
+        padding: 10px;
+        }
+
+        .circle-progress__sub {
+        display: block;
+        font-weight: 600;
+        font-size: 10px;
+        color: rgba(13,13,13,.55);
+        margin-top: 2px;
+        }
+
+        /* =========================
+   Floating Circle Progress — Responsive
+========================= */
+
+.circle-progress{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+
+  /* desktop size */
+  width: 150px;
+  height: 150px;
+
+  z-index: 9999;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 12px 28px rgba(0,0,0,.15);
+  border: 1px solid rgba(0,0,0,.10);
+  display: grid;
+  place-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.circle-progress__svg{
+  width: 150px;
+  height: 150px;
+  transform: rotate(-90deg);
+  display: block;
+}
+
+.circle-progress__track,
+.circle-progress__bar{
+  fill: none;
+  stroke-width: 8;
+}
+
+.circle-progress__track{ stroke: rgba(0,0,0,.12); }
+.circle-progress__bar{
+  stroke: var(--brand-primary);
+  stroke-linecap: round;
+  stroke-dasharray: 0 999;
+  transition: stroke-dasharray 250ms ease;
+}
+
+.circle-progress__center{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 18px;              /* bigger on desktop */
+  color: rgba(13,13,13,.88);
+  text-align: center;
+  line-height: 1.05;
+  padding: 10px;
+}
+
+.circle-progress__sub{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  color: rgba(13,13,13,.55);
+  margin-top: 4px;
+}
+
+/* Tablets */
+@media (max-width: 980px){
+  .circle-progress{
+    width: 110px;
+    height: 110px;
+    right: 14px;
+    bottom: 14px;
+  }
+  .circle-progress__svg{
+    width: 110px;
+    height: 110px;
+  }
+  .circle-progress__track,
+  .circle-progress__bar{
+    stroke-width: 7;
+  }
+  .circle-progress__center{
+    font-size: 15px;
+  }
+  .circle-progress__sub{
+    font-size: 10px;
+  }
+}
+
+/* Phones */
+@media (max-width: 480px){
+  .circle-progress{
+    width: 86px;
+    height: 86px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .circle-progress__svg{
+    width: 86px;
+    height: 86px;
+  }
+  .circle-progress__track,
+  .circle-progress__bar{
+    stroke-width: 6;
+  }
+  .circle-progress__center{
+    font-size: 13px;
+  }
+  .circle-progress__sub{
+    font-size: 9px;
+    margin-top: 2px;
+  }
+}
+
+
+:root{
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+}
+
+@supports (height: 100dvh){
+  .page{ height: calc(100dvh - var(--topbar-h)); }
+}
+
+/* Mobile: make topbar compact + readable */
+@media (max-width: 520px){
+  .topbar{
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "back title"
+      "progress progress";
+    row-gap: 10px;
+    padding: 10px 12px;
+    min-height: auto;
+    padding-top: calc(10px + var(--safe-t));
+  }
+
+  .back-btn{
+    grid-area: back;
+    justify-self: start;
+  }
+
+  .topbar__title{
+    grid-area: title;
+    justify-self: center;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 950;
+  }
+
+  .topbar__right{
+    grid-area: progress;
+    justify-self: stretch;
+  }
+
+  .progress{
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .progress__label{
+    width: 100%;
+    text-align: center;
+    padding: 10px 12px;
+  }
+}
+
+/* Mobile: spacing + cards look nicer */
+@media (max-width: 980px){
+  body{ background: var(--bg); }
+
+  .sidebar{
+    padding: 12px;
+    background: var(--card);
+  }
+
+  /* Make weeks feel like a scrollable carousel list */
+  .weeks{
+    max-height: 42vh;        /* better than 320px on big phones */
+    padding-right: 2px;
+  }
+
+  .week{
+    border-radius: 16px;
+  }
+
+  .week__summary{
+    padding: 12px 12px;
+  }
+
+  .content__header{
+    border-bottom-width: 2px;
+    padding: 14px 14px;
+  }
+
+  .content__body{
+    padding: 14px;
+  }
+
+  .block__text{
+    min-height: 64px;
+  }
+
+  .upload-note{
+    font-size: 14px;
+  }
+}
+
+/* iPhone-sized screens: make actions always accessible */
+@media (max-width: 480px){
+  .actions{
+    position: sticky;
+    bottom: 0;
+    padding-bottom: calc(10px + var(--safe-b));
+  }
+
+  .btn{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  .actions{
+    justify-content: stretch;
+  }
+}
+
+/* Floating circle: keep it from blocking the submit area on mobile */
+@media (max-width: 980px){
+  .circle-progress{
+    /* tuck it higher so it doesn't sit on top of sticky actions */
+    bottom: calc(12px + var(--safe-b) + 56px);
+    right: 12px;
+  }
+}
+
+/* Small phones: smaller widget */
+@media (max-width: 480px){
+  .circle-progress{
+    width: 84px;
+    height: 84px;
+    bottom: calc(10px + var(--safe-b) + 64px);
+  }
+  .circle-progress__svg{
+    width: 84px;
+    height: 84px;
+  }
+  .circle-progress__center{
+    font-size: 13px;
+  }
+}
+
+/* Optional: reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce){
+  .task,
+  .circle-progress__bar,
+  .week__chev{
+    transition: none !important;
+  }
+}

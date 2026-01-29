@@ -1,0 +1,483 @@
+:root{
+  --brand-primary: #FF6200;
+  --brand-dark: #0D0D0D;
+
+  --border: rgba(13,13,13,.12);
+  --shadow: 0 10px 25px rgba(0,0,0,.10);
+
+  --topbar-h: 56px;
+}
+
+*{ box-sizing:border-box; }
+
+html, body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:#000;
+  color:#111;
+  overflow:hidden;
+}
+
+/* topbar */
+.topbar{
+  position: sticky;
+  top:0;
+  z-index:1000;
+  height: var(--topbar-h);
+  padding: 0 14px;
+  background: var(--brand-dark);
+  color:#fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+
+  display:grid;
+  grid-template-columns: 120px 1fr 120px;
+  align-items:center;
+}
+
+.topbar__title{
+  margin:0;
+  text-align:center;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.back-btn{
+  border:0;
+  background: rgba(255,255,255,.12);
+  color:#fff;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor:pointer;
+  font-weight: 700;
+}
+.back-btn:hover{ background: rgba(255,255,255,.18); }
+.back-btn:active{ transform: scale(.98); }
+.back-btn:focus-visible{
+  outline: 3px solid rgba(255,98,0,.45);
+  outline-offset: 3px;
+}
+.topbar__spacer{ height:1px; }
+
+/* office fills screen under header */
+.office{
+  position: relative;
+  height: calc(100vh - var(--topbar-h));
+  width: 100%;
+  overflow: hidden;
+
+  background: #fff;
+  background-size: cover;
+  background-position: center;
+
+  --buddy-head: 160px;
+  --buddy-body: 80px;
+  --buddy-gap: 10px;
+}
+
+/* tablets */
+@media (max-width: 980px){
+  .office{
+    --buddy-head: 104px;
+    --buddy-body: 122px;
+    --buddy-gap: 8px;
+  }
+}
+
+/* Buddy clickable */
+.buddy{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border:0;
+  background: transparent;
+  cursor:pointer;
+  padding: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--buddy-gap);
+  z-index: 1;
+
+  isolation: isolate; /* ensures tooltip z-index behaves predictably */
+}
+
+
+.buddy:focus-visible{
+  outline: 3px solid rgba(255,98,0,.55);
+  outline-offset: 8px;
+  border-radius: 20px;
+}
+
+/* ===== Profile-style HEAD ===== */
+.buddy__head{
+  width: var(--buddy-head);
+  height: var(--buddy-head);
+  border-radius: 28px;
+  border: 2px solid rgba(255,98,0,.35);
+  background: linear-gradient(135deg, rgba(255,98,0,.18), rgba(13,13,13,.10));
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 26px rgba(0,0,0,.12);
+}
+
+.buddy__pfp{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.buddy__body{
+  width: var(--buddy-body);
+  height: auto;
+  display:block;
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.18));
+  margin-top: -35px;
+}
+/* =========================================================
+   TOOLTIP / CHAT BUBBLE (ABOVE BUDDY, TAIL POINTS DOWN)
+   ========================================================= */
+
+.buddy{
+  --tip-gap: 12px;
+  isolation: isolate;
+}
+
+/* Tooltip container */
+.buddy-tip{
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--tip-gap));
+  transform: translateX(-50%) translateY(6px);
+
+  width: 340px;
+  max-width: min(90vw, 380px);
+
+  background: #fff;
+  border: 1px solid rgba(13,13,13,.14);
+  border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.22);
+  padding: 12px;
+
+  /* CRITICAL: tail must not be clipped */
+  overflow: visible;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity .12s ease,
+              transform .12s ease,
+              visibility .12s ease;
+
+  z-index: 50;
+}
+
+/* Scroll INSIDE content only */
+.buddy-tip__content{
+  max-height: min(70vh, 420px);
+  overflow-y: auto;
+}
+
+/* =========================================================
+   CHAT TAIL (POINTING DOWN TOWARD BUDDY)
+   ========================================================= */
+
+/* Tail */
+.buddy-tip::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+
+  width: 16px;
+  height: 16px;
+
+  background: #fff;
+  transform: translateX(-50%) rotate(45deg);
+
+  /* THESE BORDERS DEFINE DIRECTION */
+  border-left: 1px solid rgba(13,13,13,.14);
+  border-top: 1px solid rgba(13,13,13,.14);
+
+  border-radius: 2px;
+}
+
+/* Invisible hover bridge so mouse can move upward */
+.buddy-tip::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-1 * var(--tip-gap));
+  height: var(--tip-gap);
+  background: transparent;
+}
+
+/* =========================================================
+   TOOLTIP CONTENT
+   ========================================================= */
+
+.buddy-tip__name{
+  font-weight: 950;
+  margin-bottom: 8px;
+  color: #0D0D0D;
+}
+
+.buddy-tip__row{
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  color: rgba(13,13,13,.90);
+}
+
+.buddy-tip__row .k{
+  font-weight: 800;
+  color: rgba(13,13,13,.65);
+}
+
+.buddy-tip__intro{
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(13,13,13,.18);
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(13,13,13,.80);
+}
+
+/* Teams button */
+.buddy-tip__teamsBtn{
+  margin-top: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-weight: 900;
+  color: #fff;
+  background: rgba(255,98,0,.95);
+  box-shadow: 0 10px 22px rgba(255,98,0,.25);
+
+  cursor: pointer;
+}
+
+.buddy-tip__teamsBtn:hover{ filter: brightness(.98); }
+.buddy-tip__teamsBtn:active{ transform: scale(.99); }
+
+/* =========================================================
+   DESKTOP HOVER (STAYS OPEN)
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine){
+  .buddy:hover .buddy-tip,
+  .buddy:focus-visible .buddy-tip,
+  .buddy:has(.buddy-tip:hover) .buddy-tip{
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .buddy:hover,
+  .buddy:has(.buddy-tip:hover){
+    z-index: 60;
+  }
+}
+
+/* =========================================================
+   MOBILE / TOUCH
+   ========================================================= */
+
+.buddy.is-tip-open .buddy-tip{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 680px){
+  .buddy-tip{
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+  }
+
+  .buddy-tip::before,
+  .buddy-tip::after{
+    display: none;
+  }
+
+  .buddy-tip__content{
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+
+/* ===== MOBILE: switch to grid layout ===== */
+@media (max-width: 680px){
+  body{ overflow:auto; }
+
+  .topbar{ grid-template-columns: 96px 1fr 96px; }
+  .back-btn{
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .office{
+    height: auto;
+    min-height: calc(100vh - var(--topbar-h));
+    overflow: visible;
+
+    padding: 18px 14px 18px;
+    background-position: 60% center;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 14px;
+    align-content: start;
+
+    --buddy-head: 96px;
+    --buddy-body: 110px;
+    --buddy-gap: 8px;
+  }
+
+  .buddy{
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100%;
+  }
+
+  .buddy-tip{
+    position: relative;
+    left: auto;
+    bottom: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    overflow: visible;
+    margin-top: 8px;
+  }
+
+  .buddy-tip::before{ display:none; }
+}
+
+/* very small phones: 1 column grid */
+@media (max-width: 420px){
+  .office{ grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   TOUR OVERLAY
+   ========================================================= */
+.tour{
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  pointer-events: none;
+}
+
+.tour.is-hidden{
+  display: none;
+}
+
+body.tour-active{
+  overflow: hidden;
+}
+
+/* darkening panels */
+.tour__dim{
+  position: fixed;
+  background: rgba(0,0,0,.55);
+  pointer-events: none;
+}
+
+/* spotlight border */
+.tour__spotlightBorder{
+  position: fixed;
+  border-radius: 18px;
+  border: 3px solid rgba(255,98,0,.95);
+  box-shadow: 0 0 0 4px rgba(255,98,0,.22), 0 18px 60px rgba(0,0,0,.35);
+  pointer-events: none;
+}
+
+/* tour card (clickable) */
+.tour__card{
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  width: min(520px, calc(100vw - 28px));
+
+  background: #fff;
+  border: 1px solid rgba(13,13,13,.14);
+  border-radius: 18px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.35);
+  padding: 14px;
+
+  pointer-events: auto;
+}
+
+.tour__title{
+  font-weight: 950;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #0D0D0D;
+}
+
+.tour__text{
+  white-space: pre-line;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(13,13,13,.82);
+}
+
+.tour__actions{
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tour__spacer{ flex: 1; }
+
+.tour__btn{
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.tour__btn--ghost{
+  background: rgba(13,13,13,.08);
+  color: rgba(13,13,13,.9);
+}
+.tour__btn--ghost:hover{ background: rgba(13,13,13,.12); }
+
+.tour__btn--primary{
+  background: rgba(255,98,0,.95);
+  color: #fff;
+  box-shadow: 0 12px 26px rgba(255,98,0,.22);
+}
+.tour__btn--primary:hover{ filter: brightness(.98); }
+
+.tour__btn:disabled{
+  opacity: .55;
+  cursor: not-allowed;
+}

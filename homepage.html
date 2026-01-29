@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Main Menu</title>
+        <link rel="stylesheet" href="styles/homepage.css" />
+    </head>
+
+    <body>
+        <header class="topbar">
+        <div class="topbar__left"></div>
+        <h1 class="topbar__title">Main Menu</h1>
+        <div class="topbar__right">
+            <button class="signout-btn" id="signOutBtn" type="button">Sign out</button>
+        </div>
+        </header>
+
+        <div class="title">
+        <h2>Onboarding</h2>
+        </div>
+
+        <main class="page">
+        <!-- =========================
+            BLUE AREA: News Carousel
+            (pure HTML/CSS carousel using scroll-snap)
+        ========================= -->
+        <section class="news" aria-label="Latest news">
+            <div class="news__card">
+            <div class="news__head">
+                <div class="news__meta">
+                <h2 class="news__title">Latest *SCAPE News Roundup  </h2>
+                <p class="news__sub">Quick highlights for your onboarding journey.</p>
+                </div>
+
+                <div class="news__nav" aria-label="News navigation">
+                <button class="news__arrow" id="newsPrev" type="button" aria-label="Previous news">‹</button>
+                <button class="news__arrow" id="newsNext" type="button" aria-label="Next news">›</button>
+                </div>
+
+            </div>
+
+            <div class="news__track" aria-label="News carousel track">
+                <article class="newsSlide" id="news1">
+                <div class="newsSlide__bg" style="background-image:url('assets/news-1.jpg');"></div>
+                <div class="newsSlide__content">
+                    <h3 class="newsSlide__title">Launch of *SCAPE Somerset Belt</h3>
+                    <p class="newsSlide__text">*SCAPE's Somerset Belt initiative launched successfully last week, uniting youth leaders around our vision of "space for boundless possibilities" – stay tuned for volunteer opportunities.  </p>
+
+                </div>
+                </article>
+
+                <article class="newsSlide" id="news2">
+                <div class="newsSlide__bg" style="background-image:url('assets/news-2.jpg');"></div>
+                <div class="newsSlide__content">
+                    <h3 class="newsSlide__title">2026 Annual Workplan</h3>
+                    <p class="newsSlide__text">Leadership shared the 2026 annual workplan with bold KPIs targeting youth engagement growth; teams are aligning on flagship talent development programmes starting next month.  </p>
+                </div>
+                </article>
+
+                <article class="newsSlide" id="news3">
+                <div class="newsSlide__bg" style="background-image:url('assets/news-3.jpg');"></div>
+                <div class="newsSlide__content">
+                    <h3 class="newsSlide__title">Success of Youth Festival 2026</h3>
+                    <p class="newsSlide__text">Youth Festival 2026 smashed records last Tuesday with 5,000 attendees – highlights include the entrepreneurship pitch finale; full recap video drops Friday.</p>
+
+                </div>
+                </article>
+            </div>
+            </div>
+        </section>
+
+        <!-- =========================
+            RED AREA: Your existing 6 cards (unchanged functionality)
+        ========================= -->
+        <section class="homeCards" aria-label="Main menu options">
+            <section class="grid">
+            <button class="tile" id="tour-weekly" type="button" onclick="location.href='weeklytasks.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/weekly.jpg" alt="Weekly Tasks" />
+                </div>
+                <div class="tile__body"><p class="tile__title">Weekly Task</p></div>
+            </button>
+
+            <button class="tile" id="tour-company" type="button" onclick="location.href='companyInfo.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/companyinfo.jpg" alt="Company Information" />
+                </div>
+                <div class="tile__body"><p class="tile__title">Company Information</p></div>
+            </button>
+
+            <button class="tile" id="tour-docs" type="button" onclick="location.href='documents.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/documents.jpg" alt="Documents" />
+                </div>
+                <div class="tile__body"><p class="tile__title">Documents</p></div>
+            </button>
+
+            <button class="tile" id="tour-dept" type="button" onclick="location.href='departments.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/departments.jpg" alt="Departments" />
+                </div>
+                <div class="tile__body"><p class="tile__title">Departments</p></div>
+            </button>
+
+            <button class="tile" id="tour-buddy" type="button" onclick="location.href='buddyTasks.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/buddypage.jpg" alt="Buddypage" />
+                </div>
+                <div class="tile__body"><p class="tile__title">Buddy</p></div>
+            </button>
+
+            <button class="tile" id="tour-profile" type="button" onclick="location.href='profile.html'">
+                <div class="tile__media">
+                <img class="tile__img" src="assets/profile.jpg" alt="Profile" />
+                </div>
+                <div class="tile__body"><p class="tile__title">My Profile</p></div>
+            </button>
+            </section>
+        </section>
+
+        <!-- =========================
+            GREEN AREA: Announcements
+        ========================= -->
+        <section class="ann" aria-label="Announcements">
+            <div class="ann__grid">
+            <div class="ann__left">
+                <div class="pill pill--soft">For you</div>
+                <h2 class="ann__title">Announcements</h2>
+                <p class="ann__sub">Reminders from HR / your team.</p>
+
+                <div class="annList" role="list">
+                <div class="annItem" role="listitem">
+                    <div class="annItem__tag">Today</div>
+                    <div class="annItem__body">
+                    <div class="annItem__title">Welcome to SCAPE!</div>
+                    <div class="annItem__text">Welcome onboard our three new team members in Programmes and Finance: meet Alex (loves urban sketching), Jamie (youth mentorship expert) and Sam (budget wizard) – drop them a note today!  
+</div>
+                    </div>
+                </div>
+
+                <div class="annItem" role="listitem">
+                    <div class="annItem__tag">This week</div>
+                    <div class="annItem__body">
+                    <div class="annItem__title">New Manager</div>
+                    <div class="annItem__text">Congrats to Sarah in Operations on her promotion to Manager; her hybrid work policy tweaks roll out Feb 1 to boost flexibility.  </div>
+                    </div>
+                </div>
+
+                <div class="annItem" role="listitem">
+                    <div class="annItem__tag">Reminder</div>
+                    <div class="annItem__body">
+                    <div class="annItem__title">Townhall & Pizza Social</div>
+                    <div class="annItem__text">Townhall + pizza social on Feb 12: share feedback on engagement survey results and vote on next CSR volunteer day (youth shelter build?).</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <aside class="ann__right" aria-label="Featured announcement">
+                <div class="annCard">
+                <div class="annCard__media">
+                    <img src="assets/featured-announcement.jpg" alt="Featured announcement" />
+                </div>
+                <div class="annCard__body">
+                    <div class="pill pill--dark">Featured</div>
+                    <h3 class="annCard__title">Welcome to SCAPE!</h3>
+                    <p class="annCard__text">Welcome onboard our three new team members in Programmes and Finance: meet Alex (loves urban sketching), Jamie (youth mentorship expert) and Sam (budget wizard) – drop them a note today!  </p>
+
+                </div>
+                </div>
+            </aside>
+            </div>
+        </section>
+        </main>
+
+        <!-- EVERYTHING BELOW REMAINS YOUR ORIGINAL FEATURES (unchanged) -->
+        <button class="chat-fab" id="chatFab" type="button" aria-label="Open chat">💬</button>
+
+        <div class="chat-popup is-hidden" id="chatPopup" role="dialog" aria-label="Chatbot">
+        <div class="chat-popup__header">
+            <p class="chat-popup__title">Chatbot</p>
+            <button class="chat-popup__close" id="chatClose" type="button" aria-label="Close chat">✕</button>
+        </div>
+
+        <div class="chat-popup__messages" id="chatMessages" aria-live="polite"></div>
+        <div class="chat-popup__quick" id="chatQuick" aria-label="FAQ buttons"></div>
+
+        <div class="chat-popup__inputRow">
+            <input class="chat-popup__input" id="chatInput" type="text" placeholder="Type a message..." />
+            <button class="chat-popup__send" id="chatSend" type="button">Send</button>
+        </div>
+        </div>
+
+        <div class="welcome is-hidden" id="welcome" aria-hidden="true">
+        <div class="welcome__overlay"></div>
+
+        <div class="welcome__card" role="dialog" aria-label="Welcome">
+            <div class="welcome__title">Welcome to the Onboarding Portal</div>
+            <div class="welcome__text">
+            This site will guide you through your Day 1 setup, key documents, and what to do each week.
+            You can take a quick tour now (it only takes 30 seconds).
+            </div>
+
+            <div class="welcome__actions">
+            <button class="welcome__btn welcome__btn--ghost" id="welcomeSkip" type="button">Skip tour</button>
+            <button class="welcome__btn welcome__btn--primary" id="welcomeStart" type="button">Start tour</button>
+            </div>
+        </div>
+        </div>
+
+        <div class="tour is-hidden" id="tour" aria-hidden="true">
+        <div class="tour__overlay"></div>
+        <div class="tour__spotlight" id="tourSpotlight" aria-hidden="true"></div>
+
+        <div class="tour__robotWrap" id="tourRobotWrap" role="dialog" aria-label="Tutorial guide">
+            <img class="tour__robot" src="assets/guide-robot.png" alt="" aria-hidden="true" />
+
+            <div class="tour__bubble" id="tourBubble">
+            <div class="tour__bubbleTitle" id="tourTitle">Welcome!</div>
+            <div class="tour__bubbleText" id="tourText"></div>
+
+            <div class="tour__actions">
+                <button class="tour__btn tour__btn--ghost" id="tourSkip" type="button">Skip</button>
+                <div class="tour__spacer"></div>
+                <button class="tour__btn tour__btn--ghost" id="tourBack" type="button">Back</button>
+                <button class="tour__btn tour__btn--primary" id="tourNext" type="button">Next</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="congrats is-hidden" id="congrats" aria-hidden="true">
+        <div class="congrats__overlay" id="congratsOverlay"></div>
+
+        <div class="congrats__card" role="dialog" aria-label="Congratulations">
+            <div class="congrats__title" id="congratsTitle">🎉 Congratulations!</div>
+            <div class="congrats__text" id="congratsText">You’ve completed a task.</div>
+
+            <div class="congrats__rating" id="congratsRatingBlock" aria-hidden="false">
+            <div class="congrats__ratingLabel">Rate your Day 1 experience (1–5 stars)</div>
+            <div class="stars" id="congratsStars" role="radiogroup" aria-label="Day 1 rating"></div>
+            <div class="congrats__small" id="congratsRatingHint">Tap a star to select.</div>
+            </div>
+
+            <div class="congrats__actions">
+            <button class="congrats__btn congrats__btn--primary" id="congratsOk" type="button" disabled>
+                Submit rating
+            </button>
+            </div>
+        </div>
+        </div>
+
+        <div class="nudge is-hidden" id="nudge" aria-hidden="true">
+        <div class="nudge__overlay" id="nudgeOverlay"></div>
+
+        <div class="nudge__card" role="dialog" aria-label="Check-in">
+            <div class="nudge__title" id="nudgeTitle">Quick check-in</div>
+            <div class="nudge__text" id="nudgeText">...</div>
+
+            <div class="nudge__rating is-hidden" id="ratingBlock" aria-hidden="true">
+            <div class="nudge__ratingLabel">Rate your experience (1–5 stars)</div>
+            <div class="stars" id="stars" role="radiogroup" aria-label="Rating"></div>
+            <div class="nudge__small" id="ratingHint"></div>
+            </div>
+
+            <div class="nudge__feedback is-hidden" id="feedbackBlock" aria-hidden="true">
+            <div class="nudge__feedbackLabel" id="feedbackLabel">Tell HR what you’re facing</div>
+            <textarea class="nudge__textarea" id="feedbackInput" rows="4" placeholder="Type your message..."></textarea>
+            <div class="nudge__small" id="feedbackHint">This will be sent to HR.</div>
+            </div>
+
+            <div class="nudge__actions">
+            <button class="nudge__btn nudge__btn--ghost" id="nudgeLater" type="button">Later</button>
+            <button class="nudge__btn nudge__btn--primary" id="nudgeSend" type="button">Send</button>
+            </div>
+        </div>
+        </div>
+
+    <script>
+    function loadJSON(key, fallback){
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        try { return JSON.parse(raw); } catch { return fallback; }
+    }
+    function saveJSON(key, val){
+        localStorage.setItem(key, JSON.stringify(val));
+    }
+    function show(el){
+        el.classList.remove("is-hidden");
+        el.setAttribute("aria-hidden","false");
+    }
+    function hide(el){
+        el.classList.add("is-hidden");
+        el.setAttribute("aria-hidden","true");
+    }
+
+    function getCurrentUser(){
+        try{
+        const p = JSON.parse(localStorage.getItem("profile_data_v1") || "{}");
+        return {
+            userId: p.userId || "SCAPE_User_67",
+            name: p.name || "Jaden Koh",
+            dept: p.dept || p.department || "Marketing",
+            role: p.role || "Intern",
+            contact: p.contact || "jaden.koh@scape.sg | +65 6123 4002",
+        };
+        }catch{
+        return {
+            userId: "SCAPE_User_67",
+            name: "Jaden Koh",
+            dept: "Marketing",
+            role: "Intern",
+            contact: "jaden.koh@scape.sg | +65 6123 4002",
+        };
+        }
+    }
+
+    const chatFab = document.getElementById("chatFab");
+    const chatPopup = document.getElementById("chatPopup");
+    const chatClose = document.getElementById("chatClose");
+    const chatMessages = document.getElementById("chatMessages");
+    const chatQuick = document.getElementById("chatQuick");
+    const chatInput = document.getElementById("chatInput");
+    const chatSend = document.getElementById("chatSend");
+
+    const GREETING = "Hello! 👋 Welcome. Tap a category below to view FAQs, or type your question anytime.";
+    let greeted = false;
+
+    const FAQ = {
+        "Company Basics": [
+        {
+            q: "What is SCAPE?",
+            a: "*SCAPE Co. Ltd is a registered charity and Institution of a Public Character (IPC) that empowers youth aged 15–35 through creativity, entrepreneurship, leadership, and community programs at its Somerset Belt hub."
+        },
+        {
+            q: "What is SCAPE's mission?",
+            a: "To spark creativity, promote self-expression, foster inclusivity, and build community initiatives by youth, for youth, with youth."
+        },
+        {
+            q: "Where is SCAPE located?",
+            a: "At the *SCAPE building in Somerset Belt, near Orchard Road and Somerset MRT, featuring retail, community spaces, and youth programs."
+        }
+        ],
+        "Onboarding Timeline": [
+        {
+            q: "When does onboarding start?",
+            a: "Pre-boarding begins post-offer with a welcome email and paperwork; the formal onboarding process typically spans about 90 days: Week 1 orientation, Weeks 2–4 training, and ongoing integration."
+        },
+        {
+            q: "What happens on my first day?",
+            a: "Team welcome, office tour, meet key staff, receive a welcome kit, and usually a team lunch to help you settle in."
+        },
+        {
+            q: "Who is my onboarding contact?",
+            a: "Your HR buddy or the People & Organisation manager. You can also use the portal or email for support."
+        },
+        {
+            q: "What paperwork do I need?",
+            a: "Employment contract, Key Employment Terms (KETs), tax-related forms, bank details, and work pass documents if applicable. *SCAPE will guide you on the required items."
+        },
+        {
+            q: "How do I get IT access?",
+            a: "IT Ops typically pre-sets your email and accounts. Check your welcome email for instructions, and contact Digitalisation & IT Ops if you need help."
+        }
+        ],
+        "Work Setup": [
+        {
+            q: "What are office hours?",
+            a: "Typically 9 AM – 6 PM, Monday–Friday. Hours may flex during events; hybrid arrangements may be possible depending on your role—confirm with your manager."
+        },
+        {
+            q: "What is the dress code?",
+            a: "Smart casual (e.g., collared shirts, neat pants/skirts). Business wear for meetings or formal events."
+        },
+        {
+            q: "How do I claim expenses?",
+            a: "Submit claims via the finance portal. This can cover items like transport/dinner for overtime scenarios (e.g., extended event shifts)—check internal guidelines and confirm with Finance."
+        },
+        {
+            q: "What systems will I use?",
+            a: "Commonly Microsoft tools plus HRIS/payroll and program management systems. Week 1 training usually covers the core tools you’ll need."
+        }
+        ],
+        "Policies & Leave": [
+        {
+            q: "What leave am I entitled to?",
+            a: "Annual leave (often 14+ days), sick leave, maternity/paternity, childcare leave, etc. Apply via the HR portal; your specific entitlement depends on your contract."
+        },
+        {
+            q: "How does CPF work?",
+            a: "CPF contributions are mandatory for Singapore Citizens/PRs and are handled monthly through payroll."
+        },
+        {
+            q: "How do I report issues?",
+            a: "Use the Whistleblowing Form for serious matters (confidential). For day-to-day issues, speak to your manager or HR."
+        },
+        {
+            q: "Are there performance reviews?",
+            a: "Regular check-ins typically start from Week 2, with formal appraisals aligned to role outcomes and youth impact goals."
+        }
+        ],
+        "Benefits & Growth": [
+        {
+            q: "What benefits does SCAPE offer?",
+            a: "CPF (where applicable), medical coverage/insurance, leave benefits, wellness perks, and training opportunities (details depend on your contract and role)."
+        },
+        {
+            q: "How can I grow my career?",
+            a: "Mentorship, internal development programs, and exposure across teams (e.g., Programming/Enterprise) to build skills and career pathways."
+        },
+        {
+            q: "What is the team structure?",
+            a: "Typically structured across Enterprise (e.g., Finance, HR, IT) and Experience (e.g., Programming, Marketing, Engagement) divisions."
+        }
+        ],
+        "Finance Contacts": [
+        {
+            q: "Who handles finance/payroll?",
+            a: "Finance typically handles budgeting, ops finance, and accounts. For payroll and claims, refer to the Finance contacts listed in your internal directory or portal."
+        },
+        {
+            q: "When is payday?",
+            a: "Usually end of month. Payslips are typically accessible via the portal."
+        }
+        ],
+        "Daily Life": [
+        {
+            q: "Can staff join youth programs?",
+            a: "Yes—staff can often participate in youth-facing events/programs to connect with the community and better understand programmes."
+        },
+        {
+            q: "What if I'm late on Day 1?",
+            a: "Message your buddy/manager, then proceed to reception when you arrive."
+        },
+        {
+            q: "How do I book rooms?",
+            a: "Use the office room booking system. A demo is usually provided during orientation."
+        },
+        {
+            q: "Is parking available?",
+            a: "Season parking allowances may be possible depending on policy; public transport (MRT/bus) is commonly preferred—check internal guidelines."
+        },
+        {
+            q: "What mental health support exists?",
+            a: "Support may include EAP/counseling via HR and wellbeing resources. Refer to your HR portal for the latest details."
+        }
+        ]
+    };
+
+    const FAQ_CATEGORIES = Object.keys(FAQ);
+    const FAQ_LOOKUP = (() => {
+        const m = new Map();
+        for (const cat of FAQ_CATEGORIES){
+        for (const item of FAQ[cat]){
+            m.set(item.q.trim().toLowerCase(), item.a);
+        }
+        }
+        return m;
+    })();
+
+    function addMessage(text, who) {
+        const row = document.createElement("div");
+        row.className = `chat-msg chat-msg--${who}`;
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble";
+        bubble.textContent = text;
+        row.appendChild(bubble);
+        chatMessages.appendChild(row);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function clearQuick(){
+        chatQuick.innerHTML = "";
+    }
+
+    function addQuickTitle(text){
+        const t = document.createElement("div");
+        t.className = "chat-quick__title";
+        t.textContent = text;
+        chatQuick.appendChild(t);
+    }
+
+    function addQuickButton(label, onClick, variant){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = `chat-quick__btn ${variant ? `chat-quick__btn--${variant}` : ""}`.trim();
+        b.textContent = label;
+
+        // ✅ IMPORTANT: stop bubbling so document click doesn't close popup
+        b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        onClick();
+        });
+
+        chatQuick.appendChild(b);
+        return b;
+    }
+
+    function showCategories(){
+        clearQuick();
+        addQuickTitle("FAQ Categories");
+        FAQ_CATEGORIES.forEach((cat) => {
+        addQuickButton(cat, () => showQuestions(cat), "chip");
+        });
+    }
+
+    function showQuestions(category){
+        clearQuick();
+        addQuickTitle(category);
+        addQuickButton("← Back to categories", () => showCategories(), "ghost");
+        FAQ[category].forEach((item) => {
+        addQuickButton(item.q, () => answerFAQ(item.q), "chip");
+        });
+    }
+
+    function answerFAQ(question){
+        addMessage(question, "user");
+        const ans = FAQ_LOOKUP.get(question.trim().toLowerCase());
+        addMessage(ans || "I don’t have that FAQ yet — you can type your question and I’ll try to help.", "bot");
+        showCategories();
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function openChat() {
+        chatPopup.classList.remove("is-hidden");
+        if (!greeted) {
+        addMessage(GREETING, "bot");
+        greeted = true;
+        showCategories();
+        } else {
+        if (!chatQuick.children.length) showCategories();
+        }
+        setTimeout(() => chatInput.focus(), 50);
+    }
+
+    function closeChat() {
+        chatPopup.classList.add("is-hidden");
+    }
+
+    function botReplyForText(text){
+        const key = text.trim().toLowerCase();
+        if (FAQ_LOOKUP.has(key)) return FAQ_LOOKUP.get(key);
+
+        const hit = Array.from(FAQ_LOOKUP.keys()).find(q => q === key);
+        if (hit) return FAQ_LOOKUP.get(hit);
+
+        return "Thanks for your message — please tap an FAQ button above, or ask me in your own words and I’ll try to help.";
+    }
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        addMessage(text, "user");
+        chatInput.value = "";
+        const reply = botReplyForText(text);
+        setTimeout(() => addMessage(reply, "bot"), 250);
+    }
+
+    // ✅ Prevent popup from closing when clicking inside it
+    chatPopup.addEventListener("click", (e) => e.stopPropagation());
+
+    // ✅ Also stop bubbling on the FAB click (safe)
+    chatFab.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openChat();
+    });
+
+    chatClose.addEventListener("click", closeChat);
+    chatSend.addEventListener("click", sendMessage);
+
+    chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
+        if (e.key === "Escape") closeChat();
+    });
+
+    // ✅ Close ONLY when clicking outside popup + outside fab
+    document.addEventListener("click", (e) => {
+        if (chatPopup.classList.contains("is-hidden")) return;
+
+        const path = e.composedPath ? e.composedPath() : null;
+        const clickedInside = path
+        ? (path.includes(chatPopup) || path.includes(chatFab))
+        : (chatPopup.contains(e.target) || chatFab.contains(e.target));
+
+        if (!clickedInside) closeChat();
+    });
+
+    const TOUR_KEY = "homepage_tour_done_v2";
+    const tourEl = document.getElementById("tour");
+    const tourTitle = document.getElementById("tourTitle");
+    const tourText = document.getElementById("tourText");
+    const tourSpot = document.getElementById("tourSpotlight");
+    const tourRobotWrap = document.getElementById("tourRobotWrap");
+
+    const tourNext = document.getElementById("tourNext");
+    const tourBack = document.getElementById("tourBack");
+    const tourSkip = document.getElementById("tourSkip");
+
+    const TOUR_STEPS = [
+        { title: "Hi!", text: "I'm SCAPEBOT, your friendly AI buddy here at *SCAPE! I'm super excited to guide you through this warm welcome and help you settle in with our amazing youth-focused crew. Let's make your start unforgettable , you're already part of the family! You may use me if you are ensure about anything!.", target: null },
+        { title: "Weekly Tasks", text: "Start here each week to upload and submit your tasks.", target: "#tour-weekly" },
+        { title: "Company Information", text: "Learn about the organisation, culture, and what to expect.", target: "#tour-company" },
+        { title: "Documents", text: "Find key files, guides, and downloads here.", target: "#tour-docs" },
+        { title: "Departments", text: "Explore different teams and what each department does.", target: "#tour-dept" },
+        { title: "Buddy", text: "Your buddy helps you know who to contact and what to do next.", target: "#tour-buddy" },
+        { title: "My Profile", text: "View your details and submit edits if something is wrong.", target: "#tour-profile" },
+        { title: "Chatbot", text: "Tap here any time to talk to me.", target: "#chatFab" },
+        { title: "Start your Day 1 tasks", text: "You’re all set! Click Finish to go to Weekly Tasks.", target: "#tour-weekly", done: true, goto: "weeklytasks.html" }
+    ];
+
+    let tourIndex = 0;
+    let currentTargetEl = null;
+
+    function showTour() {
+        tourEl.classList.remove("is-hidden");
+        tourEl.setAttribute("aria-hidden", "false");
+        renderTourStep();
+    }
+
+    function hideTour() {
+        tourEl.classList.add("is-hidden");
+        tourEl.setAttribute("aria-hidden", "true");
+        clearSpotlight();
+        clearTargetLift();
+    }
+
+    function clearSpotlight() {
+        tourSpot.style.width = "0px";
+        tourSpot.style.height = "0px";
+        tourSpot.style.left = "-9999px";
+        tourSpot.style.top = "-9999px";
+        tourSpot.style.opacity = "0";
+    }
+
+    function clearTargetLift() {
+        if (currentTargetEl) currentTargetEl.classList.remove("is-tour-target");
+        currentTargetEl = null;
+    }
+
+    function setSpotlightTo(selector) {
+        clearTargetLift();
+
+        if (!selector) {
+        clearSpotlight();
+        return null;
+        }
+
+        const el = document.querySelector(selector);
+        if (!el) {
+        clearSpotlight();
+        return null;
+        }
+
+        const r = el.getBoundingClientRect();
+        const pad = 10;
+
+        tourSpot.style.left = (r.left - pad) + "px";
+        tourSpot.style.top = (r.top - pad) + "px";
+        tourSpot.style.width = (r.width + pad * 2) + "px";
+        tourSpot.style.height = (r.height + pad * 2) + "px";
+        tourSpot.style.opacity = "1";
+
+        const computedPos = getComputedStyle(el).position;
+        const isFixed = computedPos === "fixed";
+        const isChatFab = selector === "#chatFab" || el.id === "chatFab";
+
+        if (!isFixed && !isChatFab) {
+        el.classList.add("is-tour-target");
+        currentTargetEl = el;
+        }
+
+        return r;
+    }
+
+    function placeRobotNearRect(rect) {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        if (!rect) {
+        const x = Math.max(16, (vw / 2) - 180);
+        const y = Math.max(16, (vh / 2) - 120);
+        tourRobotWrap.style.left = x + "px";
+        tourRobotWrap.style.top = y + "px";
+        tourRobotWrap.dataset.side = "right";
+        return;
+        }
+
+        const gap = 18;
+        const wrapW = 420;
+        const wrapH = 240;
+
+        const rightX = rect.right + gap;
+        const leftX = rect.left - gap - wrapW;
+
+        let x = rightX;
+        let side = "right";
+
+        if (rightX + wrapW > vw - 12) {
+        x = leftX;
+        side = "left";
+        }
+
+        x = Math.max(12, Math.min(vw - wrapW - 12, x));
+
+        const y = Math.max(
+        12,
+        Math.min(vh - wrapH - 12, rect.top + (rect.height / 2) - (wrapH / 2))
+        );
+
+        tourRobotWrap.style.left = x + "px";
+        tourRobotWrap.style.top = y + "px";
+        tourRobotWrap.dataset.side = side;
+    }
+
+    function renderTourStep() {
+        const step = TOUR_STEPS[tourIndex];
+        tourTitle.textContent = step.title;
+        tourText.textContent = step.text;
+
+        tourBack.disabled = tourIndex === 0;
+        const last = tourIndex === TOUR_STEPS.length - 1;
+        tourNext.textContent = last ? "Finish" : "Next";
+
+        const rect = setSpotlightTo(step.target);
+        placeRobotNearRect(rect);
+
+        if (step.done) localStorage.setItem(TOUR_KEY, "1");
+    }
+
+    tourNext.addEventListener("click", () => {
+        const step = TOUR_STEPS[tourIndex];
+        const last = tourIndex === TOUR_STEPS.length - 1;
+
+        if (!last) {
+        tourIndex += 1;
+        renderTourStep();
+        return;
+        }
+
+        localStorage.setItem(TOUR_KEY, "1");
+        hideTour();
+        if (step.goto) location.href = step.goto;
+    });
+
+    tourBack.addEventListener("click", () => {
+        if (tourIndex === 0) return;
+        tourIndex -= 1;
+        renderTourStep();
+    });
+
+    tourSkip.addEventListener("click", () => {
+        localStorage.setItem(TOUR_KEY, "1");
+        hideTour();
+    });
+
+    window.addEventListener("resize", () => {
+        if (tourEl.classList.contains("is-hidden")) return;
+        const rect = setSpotlightTo(TOUR_STEPS[tourIndex].target);
+        placeRobotNearRect(rect);
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!tourEl.classList.contains("is-hidden")) {
+        if (e.key === "Escape") {
+            localStorage.setItem(TOUR_KEY, "1");
+            hideTour();
+        }
+        if (e.key === "Enter") tourNext.click();
+        }
+    });
+
+    const welcomeEl = document.getElementById("welcome");
+    const welcomeStart = document.getElementById("welcomeStart");
+    const welcomeSkip = document.getElementById("welcomeSkip");
+
+    function showWelcome() {
+        welcomeEl.classList.remove("is-hidden");
+        welcomeEl.setAttribute("aria-hidden", "false");
+    }
+    function hideWelcome() {
+        welcomeEl.classList.add("is-hidden");
+        welcomeEl.setAttribute("aria-hidden", "true");
+    }
+
+    if (!localStorage.getItem(TOUR_KEY)) {
+        window.addEventListener("load", () => showWelcome());
+    }
+
+    welcomeStart.addEventListener("click", () => {
+        hideWelcome();
+        showTour();
+    });
+
+    welcomeSkip.addEventListener("click", () => {
+        localStorage.setItem(TOUR_KEY, "1");
+        hideWelcome();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!welcomeEl.classList.contains("is-hidden") && e.key === "Escape") {
+        localStorage.setItem(TOUR_KEY, "1");
+        hideWelcome();
+        }
+    });
+
+    document.getElementById("signOutBtn").addEventListener("click", () => {
+        location.href = "index.html";
+    });
+
+    const HR_NUDGES_KEY = "hr_homepage_nudges_v1";
+    const HR_TICKETS_KEY = "hr_tickets_v1";
+
+    const CONGRATS_KEY = "task_completion_congrats_v1";
+
+    const congratsEl = document.getElementById("congrats");
+    const congratsTitle = document.getElementById("congratsTitle");
+    const congratsText = document.getElementById("congratsText");
+    const congratsOk = document.getElementById("congratsOk");
+    const congratsOverlay = document.getElementById("congratsOverlay");
+
+    const congratsStarsEl = document.getElementById("congratsStars");
+    const congratsRatingHint = document.getElementById("congratsRatingHint");
+
+    let congratsSelectedRating = 0;
+    let congratsActiveItem = null;
+
+    function pushTicketToHR({ field, newValue, reason, extra }){
+        const user = getCurrentUser();
+        const tickets = loadJSON(HR_TICKETS_KEY, []);
+
+        const ticket = {
+        id: `MSG-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        type: "USER_MESSAGE",
+        status: "PENDING",
+        createdAt: Date.now(),
+        decidedAt: null,
+        requestedBy: {
+            userId: user.userId,
+            name: user.name,
+            dept: user.dept,
+            role: user.role,
+            contact: user.contact,
+        },
+        change: { field, newValue, reason },
+        meta: extra || {}
+        };
+
+        tickets.unshift(ticket);
+        saveJSON(HR_TICKETS_KEY, tickets);
+    }
+
+    function showCongratsModal(title, message){
+        congratsTitle.textContent = title;
+        congratsText.textContent = message;
+
+        congratsSelectedRating = 0;
+        congratsStarsEl.innerHTML = "";
+        congratsOk.disabled = true;
+        congratsRatingHint.textContent = "Tap a star to select.";
+
+        for (let i = 1; i <= 5; i++){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "star-btn";
+        b.setAttribute("aria-label", `${i} star`);
+        b.dataset.value = String(i);
+        b.textContent = "☆";
+        b.addEventListener("click", () => {
+            congratsSelectedRating = i;
+            const btns = Array.from(congratsStarsEl.querySelectorAll(".star-btn"));
+            btns.forEach(btn => {
+            const v = Number(btn.dataset.value || 0);
+            btn.textContent = v <= congratsSelectedRating ? "★" : "☆";
+            });
+            congratsRatingHint.textContent = `Selected: ${i} star${i===1 ? "" : "s"}.`;
+            congratsOk.disabled = false;
+        });
+        congratsStarsEl.appendChild(b);
+        }
+
+        show(congratsEl);
+        setTimeout(() => {
+        const first = congratsStarsEl.querySelector("button");
+        first && first.focus();
+        }, 50);
+    }
+
+    function hideCongratsModal(){
+        hide(congratsEl);
+        congratsActiveItem = null;
+    }
+
+    function consumeCongratsIfAny(){
+        const userId = getCurrentUser().userId;
+        const list = loadJSON(CONGRATS_KEY, []);
+        const idx = list.findIndex(x => !x.seenAt && (userId ? x.userId === userId : true));
+        if (idx === -1) return;
+
+        const item = list[idx];
+        item.seenAt = Date.now();
+        list[idx] = item;
+        saveJSON(CONGRATS_KEY, list);
+
+        congratsActiveItem = item;
+
+        showCongratsModal(
+        "🎉 Congrats on completing Day 1!",
+        "Please rate your Day 1 experience (1–5 stars)."
+        );
+    }
+
+    congratsOk.addEventListener("click", () => {
+        if (!congratsSelectedRating) return;
+
+        pushTicketToHR({
+        field: "Day 1 completion rating",
+        newValue: `${congratsSelectedRating}/5`,
+        reason: "User rated Day 1 completion tasks from completion popup.",
+        extra: {
+            rating: congratsSelectedRating,
+            ticketId: congratsActiveItem?.ticketId || null,
+            completionId: congratsActiveItem?.id || null,
+            section: "day1"
+        }
+        });
+
+        hideCongratsModal();
+    });
+
+    congratsOverlay.addEventListener("click", hideCongratsModal);
+    document.addEventListener("keydown", (e) => {
+        if (!congratsEl.classList.contains("is-hidden") && e.key === "Escape") hideCongratsModal();
+    });
+
+    const nudgeEl = document.getElementById("nudge");
+    const nudgeOverlay = document.getElementById("nudgeOverlay");
+    const nudgeTitle = document.getElementById("nudgeTitle");
+    const nudgeText = document.getElementById("nudgeText");
+    const nudgeLater = document.getElementById("nudgeLater");
+    const nudgeSend = document.getElementById("nudgeSend");
+
+    const ratingBlock = document.getElementById("ratingBlock");
+    const starsEl = document.getElementById("stars");
+    const ratingHint = document.getElementById("ratingHint");
+
+    const feedbackBlock = document.getElementById("feedbackBlock");
+    const feedbackLabel = document.getElementById("feedbackLabel");
+    const feedbackInput = document.getElementById("feedbackInput");
+    const feedbackHint = document.getElementById("feedbackHint");
+
+    let mode = null;
+    let selectedRating = 0;
+    let activeNudgeId = null;
+
+    function openNudge(config){
+        mode = config.mode;
+        selectedRating = 0;
+        starsEl.innerHTML = "";
+        feedbackInput.value = "";
+        activeNudgeId = config.nudgeId || null;
+
+        nudgeTitle.textContent = config.title;
+        nudgeText.textContent = config.text;
+
+        if (config.showRating){
+        show(ratingBlock);
+        hide(feedbackBlock);
+        for (let i=1; i<=5; i++){
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "star-btn";
+            b.setAttribute("aria-label", `${i} star`);
+            b.dataset.value = String(i);
+            b.textContent = "☆";
+            b.addEventListener("click", () => {
+            selectedRating = i;
+            Array.from(starsEl.querySelectorAll(".star-btn")).forEach(btn => {
+                const v = Number(btn.dataset.value || 0);
+                btn.textContent = v <= selectedRating ? "★" : "☆";
+            });
+            ratingHint.textContent = `Selected: ${i} star${i===1?"":"s"}.`;
+            nudgeSend.disabled = false;
+            });
+            starsEl.appendChild(b);
+        }
+        ratingHint.textContent = "Tap a star to select.";
+        nudgeSend.textContent = "Submit rating";
+        nudgeSend.disabled = true;
+        } else {
+        hide(ratingBlock);
+        show(feedbackBlock);
+        feedbackLabel.textContent = config.feedbackLabel || "Message to HR";
+        feedbackHint.textContent = "This will be sent to HR.";
+        nudgeSend.textContent = "Send to HR";
+        nudgeSend.disabled = true;
+        }
+
+        show(nudgeEl);
+        setTimeout(() => {
+        if (config.showRating){
+            const first = starsEl.querySelector("button");
+            first && first.focus();
+        } else {
+            feedbackInput && feedbackInput.focus();
+        }
+        }, 50);
+    }
+    function markNudgeSeen(nudgeId){
+        if (!nudgeId) return;
+        const list = loadJSON(HR_NUDGES_KEY, []);
+        const idx = list.findIndex(n => n.id === nudgeId);
+        if (idx === -1) return;
+        if (!list[idx].seenAt) {
+            list[idx].seenAt = Date.now();
+            saveJSON(HR_NUDGES_KEY, list);
+        }
+        }
+
+        function closeNudgeAndMarkSeen(){
+        markNudgeSeen(activeNudgeId);
+        closeNudge();
+        }
+
+        function closeNudge(){
+        hide(nudgeEl);
+        }
+
+
+    feedbackInput.addEventListener("input", () => {
+        const hasText = feedbackInput.value.trim().length > 0;
+        if (!ratingBlock.classList.contains("is-hidden")) return;
+        nudgeSend.disabled = !hasText;
+    });
+
+        nudgeOverlay.addEventListener("click", closeNudgeAndMarkSeen);
+        nudgeLater.addEventListener("click", closeNudgeAndMarkSeen);
+
+        document.addEventListener("keydown", (e) => {
+        if (!nudgeEl.classList.contains("is-hidden") && e.key === "Escape") closeNudgeAndMarkSeen();
+        });
+
+    nudgeSend.addEventListener("click", () => {
+        if (mode === "WEEK1_RATING"){
+            if (!selectedRating) return;
+
+            pushTicketToHR({
+            field: "Week 1 experience rating",
+            newValue: `${selectedRating}/5`,
+            reason: "User rated Week 1 onboarding tasks from HR-triggered homepage prompt.",
+            extra: { rating: selectedRating, nudgeId: activeNudgeId, section: "week1" }
+            });
+
+            if (selectedRating === 1){
+            mode = "WEEK1_ONE_STAR_FEEDBACK";
+            nudgeTitle.textContent = "Sorry to hear that 😕";
+            nudgeText.textContent = "Could you share what went wrong? Your feedback will be sent to HR.";
+            hide(ratingBlock);
+            show(feedbackBlock);
+            feedbackLabel.textContent = "Your feedback to HR";
+            feedbackHint.textContent = "Please be specific so HR can improve onboarding.";
+            nudgeSend.textContent = "Send feedback";
+            nudgeSend.disabled = true;
+            setTimeout(() => feedbackInput.focus(), 50);
+            return;
+            }
+
+            closeNudgeAndMarkSeen();   
+            return;
+        }
+
+        if (mode === "WEEK1_ONE_STAR_FEEDBACK"){
+            const msg = feedbackInput.value.trim();
+            if (!msg) return;
+
+            pushTicketToHR({
+            field: "Week 1 feedback (1-star)",
+            newValue: msg,
+            reason: "User gave 1-star rating and submitted feedback from HR-triggered homepage prompt.",
+            extra: { rating: 1, nudgeId: activeNudgeId, section: "week1" }
+            });
+
+            closeNudgeAndMarkSeen();
+            return;
+        }
+
+        if (mode === "DAY1_CHECKIN"){
+            const msg = feedbackInput.value.trim();
+            if (!msg) return;
+
+            pushTicketToHR({
+            field: "Day 1 difficulty / help request",
+            newValue: msg,
+            reason: "User responded to HR Day 1 check-in from homepage prompt.",
+            extra: { nudgeId: activeNudgeId, section: "day1" }
+            });
+
+            closeNudgeAndMarkSeen();
+            return;
+        }
+        });
+
+
+    document.addEventListener("keydown", (e) => {
+        if (!nudgeEl.classList.contains("is-hidden") && e.key === "Escape") closeNudge();
+    });
+
+    function consumeHrNudgeIfAny(){
+        if (!nudgeEl.classList.contains("is-hidden")) return;
+
+        const userId = getCurrentUser().userId;
+        const list = loadJSON(HR_NUDGES_KEY, []);
+
+        const idx = list.findIndex(n => !n.seenAt && (n.userId ? n.userId === userId : true));
+        if (idx === -1) return;
+
+        const nudge = list[idx];
+        const type = nudge.type;
+
+        // IMPORTANT: do NOT set seenAt here anymore
+
+        if (type === "WEEK1_RATING"){
+            openNudge({
+            nudgeId: nudge.id || `NUDGE-${Date.now()}`,
+            mode: "WEEK1_RATING",
+            title: nudge.title || "🎉 Congrats on completing Week 1!",
+            text: nudge.message || "Please rate your experience on the Week 1 tasks (1–5 stars).",
+            showRating: true
+            });
+            return;
+        }
+
+        // accept both old + your new type
+        if (type === "DAY1_CHECKIN" || type === "STAGE_CHECKIN_DAY1"){
+            openNudge({
+            nudgeId: nudge.id || `NUDGE-${Date.now()}`,
+            mode: "DAY1_CHECKIN",
+            title: nudge.title || "⏰ Progress check-in",
+            text: nudge.message || "Are there any difficulties you are experiencing with your Day 1 tasks?",
+            showRating: false,
+            feedbackLabel: nudge.feedbackLabel || "Message to HR"
+            });
+            return;
+        }
+        }
+
+
+    function startHrNudgeWatchers(){
+        setInterval(consumeHrNudgeIfAny, 900);
+        window.addEventListener("storage", (e) => {
+        if (e.key === HR_NUDGES_KEY) setTimeout(consumeHrNudgeIfAny, 50);
+        });
+    }
+
+    window.addEventListener("load", () => {
+        consumeCongratsIfAny();
+        consumeHrNudgeIfAny();
+        startHrNudgeWatchers();
+    });
+
+      (function(){
+    const track = document.querySelector(".news__track");
+    const slides = Array.from(document.querySelectorAll(".newsSlide"));
+    const prevBtn = document.getElementById("newsPrev");
+    const nextBtn = document.getElementById("newsNext");
+
+    if (!track || slides.length === 0 || !prevBtn || !nextBtn) return;
+
+    let index = 0;
+    let timer = null;
+
+    const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function slideWidth(){
+            const first = slides[0];
+            const rect = first.getBoundingClientRect();
+            const gap = parseFloat(getComputedStyle(track).gap || "0") || 0;
+            return rect.width + gap;
+            }
+
+            function goTo(i, smooth = true){
+            index = (i + slides.length) % slides.length;
+            track.scrollTo({
+                left: index * slideWidth(),
+                behavior: (smooth && !prefersReducedMotion) ? "smooth" : "auto"
+            });
+            }
+
+            function next(){ goTo(index + 1); }
+            function prev(){ goTo(index - 1); }
+
+            function startAuto(){
+            stopAuto();
+            if (prefersReducedMotion) return; // respect user accessibility setting
+            timer = setInterval(next, 4000); // change timing here (ms)
+            }
+
+            function stopAuto(){
+            if (timer) clearInterval(timer);
+            timer = null;
+            }
+
+            // Buttons
+            nextBtn.addEventListener("click", () => { stopAuto(); next(); startAuto(); });
+            prevBtn.addEventListener("click", () => { stopAuto(); prev(); startAuto(); });
+
+            // Keep index in sync if user swipes/scrolls
+            let scrollTick = null;
+            track.addEventListener("scroll", () => {
+            if (scrollTick) cancelAnimationFrame(scrollTick);
+            scrollTick = requestAnimationFrame(() => {
+                const w = slideWidth();
+                const i = Math.round(track.scrollLeft / w);
+                index = Math.max(0, Math.min(slides.length - 1, i));
+            });
+            }, { passive: true });
+
+            // Pause auto on hover/focus; resume after
+            track.addEventListener("mouseenter", stopAuto);
+            track.addEventListener("mouseleave", startAuto);
+            track.addEventListener("focusin", stopAuto);
+            track.addEventListener("focusout", startAuto);
+
+            // Start
+            window.addEventListener("load", () => {
+            goTo(0, false);
+            startAuto();
+            });
+
+            window.addEventListener("resize", () => {
+            // keep current slide aligned after resize
+            goTo(index, false);
+            });
+        })();
+    </script>
+
+    </body>
+    </html>

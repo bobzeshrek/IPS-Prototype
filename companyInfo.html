@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Information</title>
+    <link rel="stylesheet" href="styles/companyInfo.css" />
+    </head>
+
+    <body>
+    <!-- Topbar -->
+    <header class="topbar">
+        <button class="back-btn" type="button" onclick="history.back()" aria-label="Go back">← Back</button>
+        <h1 class="topbar__title">Company Information</h1>
+        <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <!-- Progress (sticky under topbar) -->
+    <div class="progress" aria-hidden="true">
+        <div class="progress__track">
+        <div class="progress__bar" id="progressBar"></div>
+        </div>
+        <div class="progress__meta">
+        <span class="progress__label">Progress</span>
+        <span class="progress__pct" id="progressPct">0%</span>
+        </div>
+    </div>
+
+    <main class="page">
+        <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" aria-label="Learning path navigation">
+            <div class="sidebar__title">Categories</div>
+
+            <div class="nav">
+            <div class="nav__group">
+                <div class="nav__groupTitle">Company Information</div>
+                <button class="nav__btn is-active" type="button" data-target="about">Overview</button>
+                <button class="nav__btn" type="button" data-target="mission">Mission</button>
+                <button class="nav__btn" type="button" data-target="location">Location</button>
+                <button class="nav__btn" type="button" data-target="collabs">Partners & Initiatives</button>
+            </div>
+
+            <div class="nav__divider"></div>
+
+            <div class="nav__group">
+                <div class="nav__groupTitle">Departments, Roles & Fun Highlights</div>
+                <button class="nav__btn" type="button" data-target="progops">🎤 Programmes & Operations</button>
+                <button class="nav__btn" type="button" data-target="creative">🎨 Creative & Content</button>
+                <button class="nav__btn" type="button" data-target="community">🤝 Community & Partnerships</button>
+                <button class="nav__btn" type="button" data-target="marketing">📢 Marketing & Communications</button>
+                <button class="nav__btn" type="button" data-target="finance">💰 Finance & Administration</button>
+                <button class="nav__btn" type="button" data-target="hr">🌱 People & Culture (HR)</button>
+            </div>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <section class="content" aria-label="Company information content">
+            <div class="content__card">
+            <div class="content__header">
+                <h2 class="content__title">Structured Learning Path</h2>
+                <div class="content__meta">Scroll through each module to complete it</div>
+            </div>
+
+            <div class="content__body">
+
+                <!-- SECTION: Overview -->
+                <article class="section" id="about" data-title="Overview">
+                <div class="section__image" style="background-image:url('assets/companyinfooverview.jpg');" role="img" aria-label="Overview"></div>
+                <div class="section__top">
+                    <div class="section__pill">Company Information</div>
+                    <h3 class="section__title">Overview</h3>
+                    <p class="section__desc">
+                    *SCAPE Co., Ltd. is a youth-focused non-profit organisation, registered charity,
+                    and Institution of a Public Character based in Singapore. Established in 2007,
+                    *SCAPE operates a vibrant multi-level hub at 2 Orchard Link in the heart of Orchard Road.
+                    </p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Youth-focused non-profit organisation in Singapore</li>
+                        <li>Registered charity and Institution of a Public Character</li>
+                        <li>Runs programmes, events, and community spaces designed by youth, for youth</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Quick note</div>
+                    <p class="block__text">
+                        Think of this page like an LMS module — once you scroll past a section, it gets marked as completed.
+                    </p>
+                    </div>
+                </div>
+                </article>
+
+                <!-- SECTION: Mission -->
+                <article class="section" id="mission" data-title="Mission">
+                <div class="section__image" style="background-image:url('assets/companyinfomission.jpg');" role="img" aria-label="Mission"></div>
+                <div class="section__top">
+                    <div class="section__pill">Company Information</div>
+                    <h3 class="section__title">Mission</h3>
+                    <p class="section__desc">
+                    *SCAPE’s mission is to inspire, empower and support young people through opportunities
+                    in creative arts, entrepreneurship, leadership development, urban sports, wellness, and more.
+                    </p>
+                </div>
+
+                <div class="block">
+                    <div class="block__label">Key focus areas</div>
+                    <ul class="bullets">
+                    <li>Inspire and empower young people</li>
+                    <li>Support youth through creative and skill-building opportunities</li>
+                    <li>Create real-world pathways through programmes and experiences</li>
+                    </ul>
+                </div>
+                </article>
+
+                <!-- SECTION: Location -->
+                <article class="section" id="location" data-title="Location">
+                <div class="section__image" style="background-image:url('assets/companyinfolocation.jpg');" role="img" aria-label="Location"></div>
+                <div class="section__top">
+                    <div class="section__pill">Company Information</div>
+                    <h3 class="section__title">Location</h3>
+                    <p class="section__desc">
+                    *SCAPE operates a vibrant multi-level hub at 2 Orchard Link in the heart of Orchard Road.
+                    </p>
+                </div>
+
+                <div class="block">
+                    <div class="block__label">What to expect</div>
+                    <ul class="bullets">
+                    <li>Multi-level hub in Orchard Road</li>
+                    <li>A central space for events, workshops, and youth community experiences</li>
+                    </ul>
+                </div>
+                </article>
+
+                <!-- SECTION: Partners -->
+                <article class="section" id="collabs" data-title="Partners & Initiatives">
+                <div class="section__image" style="background-image:url('assets/companyinfopartner.jpg');" role="img" aria-label="Partners and Initiatives"></div>
+                <div class="section__top">
+                    <div class="section__pill">Company Information</div>
+                    <h3 class="section__title">Partners & Initiatives</h3>
+                    <p class="section__desc">
+                    *SCAPE collaborates with partners to deliver workshops, festivals and initiatives that help youth
+                    explore their talents and build real-world skills.
+                    </p>
+                </div>
+
+                <div class="block">
+                    <div class="block__label">How collaborations help</div>
+                    <ul class="bullets">
+                    <li>Works with partners to run workshops and festivals</li>
+                    <li>Creates initiatives that help youth explore talents</li>
+                    <li>Supports youth in building practical, real-world skills</li>
+                    </ul>
+                </div>
+                </article>
+
+                <!-- Departments -->
+                <div class="divider" aria-hidden="true"></div>
+                <div class="content__subhead">Departments, Roles & Fun Highlights</div>
+
+                <article class="section" id="progops" data-title="Programmes & Operations">
+                <div class="section__image" style="background-image:url('assets/companyinfoevents.jpg');" role="img" aria-label="Programmes and Operations"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">🎤 Programmes & Operations</h3>
+                    <p class="section__desc">Plan and manage youth events, workshops, and large-scale festivals.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Plan and manage youth events and workshops</li>
+                        <li>Coordinate logistics for large-scale festivals</li>
+                        <li>Ensure smooth operations during live events</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Run signature youth festivals, showcases & career fairs</li>
+                        <li>Manage live events, stage shows, and pop-up experiences</li>
+                        <li>Work directly with youth creators and performers</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+                <article class="section" id="creative" data-title="Creative & Content">
+                <div class="section__image" style="background-image:url('assets/companyinfocreative.jpg');" role="img" aria-label="Creative and Content"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">🎨 Creative & Content</h3>
+                    <p class="section__desc">Design visuals, create videos, manage social content and branding.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Design visuals and key art for programmes</li>
+                        <li>Create videos and event coverage content</li>
+                        <li>Maintain branding and social media presence</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Produce content for TikTok, Instagram & YouTube</li>
+                        <li>Cover live events with behind-the-scenes content</li>
+                        <li>Create campaign visuals for major *SCAPE programmes</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+                <article class="section" id="community" data-title="Community & Partnerships">
+                <div class="section__image" style="background-image:url('assets/companyinfocommunity.jpg');" role="img" aria-label="Community and Partnerships"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">🤝 Community & Partnerships</h3>
+                    <p class="section__desc">Collaborate with schools, brands, and youth organisations.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Build relationships with schools and youth orgs</li>
+                        <li>Coordinate collaborations with brands and partners</li>
+                        <li>Enable mentorships and youth opportunities</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Secure brand sponsorships for festivals</li>
+                        <li>Organise industry mentorship programmes</li>
+                        <li>Connect youth with real-world opportunities</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+                <article class="section" id="marketing" data-title="Marketing & Communications">
+                <div class="section__image" style="background-image:url('assets/companyinfomarketing.jpg');" role="img" aria-label="Marketing and Communications"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">📢 Marketing & Communications</h3>
+                    <p class="section__desc">Promote events, manage campaigns, and build *SCAPE’s brand.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Promote events through campaigns and content</li>
+                        <li>Manage communications and PR messaging</li>
+                        <li>Grow brand awareness and engagement</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Launch viral social campaigns</li>
+                        <li>Run influencer collaborations</li>
+                        <li>Handle PR for major youth events</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+                <article class="section" id="finance" data-title="Finance & Administration">
+                <div class="section__image" style="background-image:url('assets/companyinfofinance.jpg');" role="img" aria-label="Finance and Administration"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">💰 Finance & Administration</h3>
+                    <p class="section__desc">Manage budgets, payments, and event funding.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Manage budgets and payments for programmes</li>
+                        <li>Track event funding and spending</li>
+                        <li>Support teams with admin processes</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Support budgeting for large-scale festivals</li>
+                        <li>Track funding for creative projects</li>
+                        <li>Work closely with programme teams</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+                <article class="section" id="hr" data-title="People & Culture (HR)">
+                <div class="section__image" style="background-image:url('assets/companyinfohr.jpg');" role="img" aria-label="People and Culture"></div>
+                <div class="section__top">
+                    <div class="section__pill">Departments</div>
+                    <h3 class="section__title">🌱 People & Culture (HR)</h3>
+                    <p class="section__desc">Recruit, onboard, and support staff development.</p>
+                </div>
+
+                <div class="section__grid">
+                    <div class="block">
+                    <div class="block__label">What they do</div>
+                    <ul class="bullets">
+                        <li>Recruit and onboard staff</li>
+                        <li>Support development and training</li>
+                        <li>Maintain a positive workplace culture</li>
+                    </ul>
+                    </div>
+
+                    <div class="block">
+                    <div class="block__label">Fun highlights</div>
+                    <ul class="bullets">
+                        <li>Plan team bonding days & staff wellness events</li>
+                        <li>Organise training workshops</li>
+                        <li>Lead staff appreciation initiatives</li>
+                    </ul>
+                    </div>
+                </div>
+                </article>
+
+            </div>
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <script>
+    const sections = [...document.querySelectorAll(".section")];
+    const navButtons = [...document.querySelectorAll(".nav__btn")];
+    const progressBar = document.getElementById("progressBar");
+    const progressPct = document.getElementById("progressPct");
+
+    let activeId = null;
+    const completed = new Set();
+
+    // helper
+    function setActive(id) {
+        if (!id || id === activeId) return;
+        activeId = id;
+
+        navButtons.forEach(b => b.classList.remove("is-active"));
+        const btn = document.querySelector(`.nav__btn[data-target="${id}"]`);
+        if (btn) btn.classList.add("is-active");
+
+        // mark complete when active
+        completed.add(id);
+        btn?.classList.add("is-complete");
+    }
+
+    // smooth scroll on click
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+        const target = document.getElementById(btn.dataset.target);
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        });
+    });
+
+    // main scroll logic
+    function onScroll() {
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const docHeight = document.body.scrollHeight - viewportHeight;
+
+        /* -----------------------
+        Progress bar
+        ------------------------ */
+        const pct = docHeight <= 0 ? 0 : Math.min(100, (scrollY / docHeight) * 100);
+        progressBar.style.width = pct + "%";
+        progressPct.textContent = Math.round(pct) + "%";
+
+        /* -----------------------
+        Active section logic
+        "reading line" = 30% from top
+        ------------------------ */
+        const readingLine = viewportHeight * 0.3;
+        let current = sections[0];
+
+        for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= readingLine) {
+            current = section;
+        } else {
+            break;
+        }
+        }
+
+        /* -----------------------
+        Bottom override
+        ------------------------ */
+        const atBottom =
+        window.innerHeight + scrollY >= document.body.scrollHeight - 4;
+
+        if (atBottom) {
+        current = sections[sections.length - 1];
+        }
+
+        setActive(current.id);
+    }
+
+    // run
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    // init
+    onScroll();
+    </script>
+
+</body>
+</html>

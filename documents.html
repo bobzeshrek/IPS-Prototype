@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents</title>
+    <link rel="stylesheet" href="styles/documents.css" />
+    </head>
+
+    <body>
+    <header class="topbar">
+    <button class="back-btn" type="button" onclick="window.location.href='homepage.html'">← Back</button>
+    <h1 class="topbar__title">Documents</h1>
+    <div class="topbar__spacer" aria-hidden="true"></div>
+    </header>
+
+    <main class="page">
+    <section class="shell" aria-label="Documents">
+
+    <!-- LEFT -->
+    <aside class="left">
+    <div class="left__header">
+        <div class="left__title">Essential Docs</div>
+        <div class="left__sub">
+        Select a document from the list below to preview it.
+        </div>
+
+        <div class="controls">
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Search documents..."
+            aria-label="Search documents"
+        />
+        <select id="filter" class="filter" aria-label="Filter by category">
+            <option value="all">All</option>
+            <option value="onboarding">Onboarding</option>
+            <option value="hr">HR</option>
+            <option value="it">IT</option>
+            <option value="policies">Policies</option>
+            <option value="forms">Forms</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="list" id="docList" role="list"></div>
+    </aside>
+
+    <!-- RIGHT -->
+    <section class="right">
+    <div class="right__header">
+        <div class="right__title" id="previewTitle">Preview</div>
+        <div class="right__sub" id="previewSub">
+        PDFs will open here.
+        </div>
+    </div>
+
+    <div class="frameWrap">
+        <iframe
+        id="spFrame"
+        title="Document preview"
+        class="spFrame"
+        src=""
+        ></iframe>
+
+        <!-- Empty state -->
+        <div class="frameEmpty" id="frameEmpty">
+        <p class="frameEmpty__text">
+            You can load a PDF here by selecting a document from the list on the left.
+        </p>
+        </div>
+    </div>
+
+    <div class="right__footer">
+        <div class="pill" id="statusPill">Ready</div>
+    </div>
+    </section>
+
+    </section>
+    </main>
+
+    <script>
+    const DOCS = [
+    {
+        id: "d1",
+        title: "Newcomer Starter Pack",
+        category: "onboarding",
+        desc: "Quick links + onboarding checklist",
+        url: "assets/pdfs/newcomer-starter-pack.pdf"
+    },
+    {
+        id: "d2",
+        title: "Employee Handbook",
+        category: "policies",
+        desc: "Key policies & code of conduct",
+        url: "assets/pdfs/employee-handbook.pdf"
+    },
+    {
+        id: "d3",
+        title: "IT Setup Guide",
+        category: "it",
+        desc: "Accounts, devices, Wi-Fi, tools",
+        url: "assets/pdfs/it-setup-guide.pdf"
+    },
+    {
+        id: "d4",
+        title: "Leaves & Claims Guide",
+        category: "hr",
+        desc: "Leave types, claims, approvals",
+        url: "assets/pdfs/leaves-and-claims-guide.pdf"
+    },
+    {
+        id: "d5",
+        title: "HR Guide",
+        category: "forms",
+        desc: "HR forms and key HR resources",
+        url: "assets/pdfs/hr-guide.pdf"
+    },
+    {
+        id: "d6",
+        title: "Data Handling & Security Basics",
+        category: "policies",
+        desc: "Data handling and security basics",
+        url: "assets/pdfs/data-handling-and-security-basics.pdf"
+    }
+    ];
+
+    // DOM
+    const spFrame     = document.getElementById("spFrame");
+    const frameEmpty  = document.getElementById("frameEmpty");
+    const docList     = document.getElementById("docList");
+    const searchEl    = document.getElementById("search");
+    const filterEl    = document.getElementById("filter");
+    const previewTitle = document.getElementById("previewTitle");
+    const previewSub   = document.getElementById("previewSub");
+    const statusPill   = document.getElementById("statusPill");
+
+    // helpers
+    function escapeHTML(s){
+    return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function setFrame(url){
+    if (!url){
+        spFrame.src = "";
+        frameEmpty.classList.remove("is-hidden");
+        statusPill.textContent = "Ready";
+        return;
+    }
+
+    frameEmpty.classList.add("is-hidden");
+    spFrame.src = url;
+    statusPill.textContent = "Previewing (PDF)";
+    }
+
+    // default
+    setFrame("");
+
+    // search + filter
+    function matches(doc, q, cat){
+    const text = (doc.title + " " + doc.desc).toLowerCase();
+    return (!q || text.includes(q.toLowerCase())) &&
+            (cat === "all" || doc.category === cat);
+    }
+
+    function render(){
+    const q = searchEl.value.trim();
+    const cat = filterEl.value;
+    const items = DOCS.filter(d => matches(d, q, cat));
+
+    docList.innerHTML = "";
+
+    if (!items.length){
+        docList.textContent = "No documents match your search.";
+        return;
+    }
+
+    items.forEach(doc => {
+        const btn = document.createElement("button");
+        btn.className = "doc";
+        btn.innerHTML = `
+        <div class="doc__title">${escapeHTML(doc.title)}</div>
+        <div class="doc__desc">${escapeHTML(doc.desc)}</div>
+        <div class="doc__meta">
+            <span class="tag">${doc.category.toUpperCase()}</span>
+            <span class="open">Preview</span>
+        </div>
+        `;
+        btn.onclick = () => {
+        previewTitle.textContent = doc.title;
+        previewSub.textContent = doc.desc;
+        setFrame(doc.url);
+        };
+        docList.appendChild(btn);
+    });
+    }
+
+searchEl.addEventListener("input", render);
+filterEl.addEventListener("change", render);
+render();
+</script>
+</body>
+</html>
